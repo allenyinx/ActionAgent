@@ -1,4 +1,4 @@
-FROM allenyinx/agent_base_1_graph:1.0
+FROM allenyinx/agent_base_1_graph:2.0
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
 USER root
@@ -14,7 +14,7 @@ USER root
 #       google-chrome-beta  (pull latest beta)
 #============================================
 ARG CHROME_VERSION="google-chrome-stable"
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
+RUN wget --debug --show-progress --verbose -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list \
   && apt-get update -qqy \
   && apt-get -qqy install \
@@ -26,7 +26,11 @@ RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo ap
 # Chrome Launch Script Wrapper
 #=================================
 COPY wrap_chrome_binary /opt/bin/wrap_chrome_binary
-RUN /opt/bin/wrap_chrome_binary
+RUN chmod +x /opt/bin/wrap_chrome_binary && \
+    /opt/bin/wrap_chrome_binary
+
+COPY generate_config.sh /opt/bin/generate_config.sh
+RUN chmod +x /opt/bin/generate_config.sh
 
 USER airbot
 
@@ -44,13 +48,11 @@ RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
   && echo "Using chromedriver version: "$CHROME_DRIVER_VERSION \
   && wget --no-verbose -O /tmp/chromedriver_linux64.zip https://chromedriver.storage.googleapis.com/$CHROME_DRIVER_VERSION/chromedriver_linux64.zip \
   && rm -rf /opt/airbot/chromedriver \
-  && unzip /tmp/chromedriver_linux64.zip -d /opt/selenium \
+  && unzip /tmp/chromedriver_linux64.zip -d /opt/airbot \
   && rm /tmp/chromedriver_linux64.zip \
   && mv /opt/airbot/chromedriver /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION \
   && chmod 755 /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION \
   && sudo ln -fs /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
 
-COPY generate_config /opt/bin/generate_config
-
 # Generating a default config during build time
-RUN /opt/bin/generate_config > /opt/airbot/config.json
+RUN /opt/bin/generate_config.sh > /opt/airbot/config.json
