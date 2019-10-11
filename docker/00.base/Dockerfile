@@ -1,4 +1,4 @@
-FROM ubuntu:bionic-20190612
+FROM ubuntu:xenial-20190904
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
 #================================================
