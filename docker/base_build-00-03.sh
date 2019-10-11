@@ -16,7 +16,7 @@ timestamp=$(date +"%m%d%H.%s")
 ImageGlobalTag=${Release}-${timestamp}
 
 # Define layer names.
-Base_init=agent_base
+Base_init=agent_base_0_platform
 Base_graph=agent_base_1_graph
 Base_browser=agent_base_2_browser
 Base_devtool=agent_base_3_devtool

@@ -1,4 +1,4 @@
-FROM airta/agent_base:2.1-101114.1570776816
+FROM airta/agent_base_0_platform:2.1-101114.1570776816
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
 USER root
