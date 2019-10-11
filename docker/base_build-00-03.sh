@@ -49,7 +49,7 @@ function dockerBuild() {
 
   echo "Building image layer: $2 with tag: ${ImageGlobalTag}"
   cd $1 || exit
-  docker build -t ${DockerCategory}/$2:${ImageGlobalTag} -f Dockerfile .
+  docker build -t ${DockerCategory}/$2:${ImageGlobalTag} -f Dockerfile . || exit 1
   cd ..
   echo "Done Building image $2:${ImageGlobalTag}"
 }
