@@ -99,7 +99,6 @@ function release_version() {
   docker push ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_publish}:latest
-  echo "done pushing .."
 }
 
 function clearLocal_version() {
@@ -114,14 +113,14 @@ function clearLocal_version() {
 function print_all() {
 
     echo ""
-    echo "================================="
-    echo "=========publish info============"
+    echo "==================================================="
+    echo "==================publish info====================="
     echo "==="${DockerCategory}/${Base_init}:${ImageGlobalTag}"==="
     echo "==="${DockerCategory}/${Base_graph}:${ImageGlobalTag}"==="
     echo "==="${DockerCategory}/${Base_browser}:${ImageGlobalTag}"==="
     echo "==="${DockerCategory}/${Base_devtool}:${ImageGlobalTag}"==="
     echo "==="${DockerCategory}/${Base_publish}:latest"==="
-    echo "================================="
+    echo "==================================================="
     echo ""
 }
 
