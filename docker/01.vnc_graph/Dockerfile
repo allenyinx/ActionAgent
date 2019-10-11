@@ -1,4 +1,4 @@
-FROM allenyinx/agent_base:1.1
+FROM allenyinx/agent_base:2.0
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
 USER root
