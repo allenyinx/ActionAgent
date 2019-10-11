@@ -10,3 +10,4 @@ ImageGlobalTag=${Release}-${timestamp}
 ./mvnw package
 
 docker build -t ${DockerCategory}/${NAME}:${ImageGlobalTag} -f Dockerfile . || exit 1
+docker push ${DockerCategory}/${NAME}:${ImageGlobalTag}
