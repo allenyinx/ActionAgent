@@ -1,21 +1,3 @@
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-# NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
-# PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
-# !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM airta/agent_base_2_browser:2.1-101114.1570776816
+FROM airta/agent_base_3_devtool:{{ versionPlaceHolder }}
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
-RUN apt-get -qqy update \
-  && apt-get -qqy --no-install-recommends install \
-    unzip \
-    jq \
-    curl \
-    ant \
-    vim \
-    git \
-    net-tools \
-  && apt-get autoclean \
-  && apt-get autoremove \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
-  && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security

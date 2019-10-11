@@ -1,3 +1,10 @@
 FROM airta/agent_base_3_devtool:{{ versionPlaceHolder }}
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
+COPY entry_point.sh /opt/bin/
+RUN sudo chmod +x /opt/bin/entry_point.sh
+
+COPY start-agent.sh \
+      /home/airbot/
+
+RUN sudo chmod +x /home/airbot/start-agent.sh
