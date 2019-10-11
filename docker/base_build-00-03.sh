@@ -20,12 +20,14 @@ Base_init=agent_base
 Base_graph=agent_base_1_graph
 Base_browser=agent_base_2_browser
 Base_devtool=agent_base_3_devtool
+Base_publish=agent_base_publish
 
 # Define layer folder names.
 Folder_init=00.base
 Folder_graph=01.vnc_graph
 Folder_browser=02.browser
 Folder_devtool=03.devtool
+Folder_publish=04.publish
 
 function main() {
 
@@ -42,6 +44,7 @@ function build_all() {
   buildImage ${Folder_graph} ${Base_graph}
   buildImage ${Folder_browser} ${Base_browser}
   buildImage ${Folder_devtool} ${Base_devtool}
+  buildImage ${Folder_publish} ${Base_publish}
 
 }
 
@@ -79,6 +82,7 @@ function release_version() {
   docker push ${DockerCategory}/${Base_graph}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
+  docker push ${DockerCategory}/${Base_publish}:latest
   echo "done publishing .."
 }
 
@@ -88,6 +92,7 @@ function clearLocal_version() {
   docker rm -f ${DockerCategory}/${Base_graph}:${ImageGlobalTag}
   docker rm -f ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
   docker rm -f ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
+  docker rm -f ${DockerCategory}/${Base_publish}:latest
 }
 
 main
