@@ -2,7 +2,7 @@
 # NOTE: DO *NOT* EDIT THIS FILE.  IT IS GENERATED.
 # PLEASE UPDATE Dockerfile.txt INSTEAD OF THIS FILE
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-FROM allenyinx/airgent:1.0
+FROM allenyinx/agent_base_2_browser:2.0
 LABEL authors="allen"
 
 USER root
@@ -106,18 +106,6 @@ ENV NODE_MAX_INSTANCES 1
 ENV NODE_MAX_SESSION 1
 # As address, maps to "host"
 ENV NODE_HOST 0.0.0.0
-# As integer, maps to "port"
-ENV NODE_PORT 5555
-# In milliseconds, maps to "registerCycle"
-ENV NODE_REGISTER_CYCLE 5000
-# In milliseconds, maps to "nodePolling"
-ENV NODE_POLLING 5000
-# In milliseconds, maps to "unregisterIfStillDownAfter"
-ENV NODE_UNREGISTER_IF_STILL_DOWN_AFTER 60000
-# As integer, maps to "downPollingLimit"
-ENV NODE_DOWN_POLLING_LIMIT 2
-# As string, maps to "applicationName"
-ENV NODE_APPLICATION_NAME ""
 
 ENV DBUS_SESSION_BUS_ADDRESS=/dev/null
 
