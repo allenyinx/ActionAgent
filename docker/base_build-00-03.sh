@@ -44,7 +44,7 @@ function build_all() {
   buildImage ${Folder_graph} ${Base_graph}
   buildImage ${Folder_browser} ${Base_browser}
   buildImage ${Folder_devtool} ${Base_devtool}
-  buildImage ${Folder_publish} ${Base_publish}
+  buildImage_publish ${Folder_publish} ${Base_publish}
 
 }
 
@@ -57,10 +57,25 @@ function dockerBuild() {
   echo "Done Building image $2:${ImageGlobalTag}"
 }
 
+function dockerBuild_publish() {
+
+  echo "Building image layer: $2 with tag: ${ImageGlobalTag}"
+  cd $1 || exit
+  docker build -t ${DockerCategory}/$2:latest -f Dockerfile . || exit 1
+  cd ..
+  echo "Done Building image $2:${ImageGlobalTag}"
+}
+
 function buildImage() {
 
   assignImageTag $1
   dockerBuild $1 $2
+}
+
+function buildImage_publish() {
+
+  assignImageTag $1
+  dockerBuild_publish $1 $2
 }
 
 # dynamic change the layer versions.
