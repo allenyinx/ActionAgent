@@ -23,14 +23,7 @@ RUN apt-get -qqy update \
     openjdk-8-jre-headless \
     tzdata \
     sudo \
-    unzip \
     wget \
-    jq \
-    curl \
-    ant \
-    vim \
-    git \
-    net-tools \
     language-pack-en \
     locales \
     supervisor \
