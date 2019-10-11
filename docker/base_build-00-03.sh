@@ -12,7 +12,7 @@
 DockerCategory=airta
 NAME=agent_base
 Release=2.1
-timestamp=$(date +"%m%d%H.%s")
+timestamp=$(date +"%y%m%d%H.%s")
 ImageGlobalTag=${Release}-${timestamp}
 
 # Define layer names.
