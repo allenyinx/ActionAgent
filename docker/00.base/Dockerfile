@@ -22,6 +22,7 @@ RUN apt-get -qqy update \
     ca-certificates \
     openjdk-8-jre-headless \
     tzdata \
+    unzip \
     sudo \
     wget \
     language-pack-en \
