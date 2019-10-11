@@ -66,7 +66,8 @@ function assignImageTag() {
   cd "$1" || exit
   rm Dockerfile
   cat Dockerfile_template > Dockerfile
-  sed -i '' 's/{{ versionPlaceHolder }}/'${ImageGlobalTag}'/g' Dockerfile
+  sed -i 's/{{ versionPlaceHolder }}/'${ImageGlobalTag}'/g' Dockerfile
+#  sed -i '' 's/{{ versionPlaceHolder }}/'${ImageGlobalTag}'/g' Dockerfile
   cd ..
   echo "layer tag assigned .."
 }
