@@ -34,6 +34,7 @@ function main() {
   echo "build all with default ${ImageGlobalTag}"
   build_all
   release_version
+  print_all
 #  clearLocal_version
 }
 
@@ -98,7 +99,7 @@ function release_version() {
   docker push ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
   docker push ${DockerCategory}/${Base_publish}:latest
-  echo "done publishing .."
+  echo "done pushing .."
 }
 
 function clearLocal_version() {
@@ -108,6 +109,20 @@ function clearLocal_version() {
   docker rm -f ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
   docker rm -f ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
   docker rm -f ${DockerCategory}/${Base_publish}:latest
+}
+
+function print_all() {
+
+    echo ""
+    echo "================================="
+    echo "=========publish info============"
+    echo "==="${DockerCategory}/${Base_init}:${ImageGlobalTag}"==="
+    echo "==="${DockerCategory}/${Base_graph}:${ImageGlobalTag}"==="
+    echo "==="${DockerCategory}/${Base_browser}:${ImageGlobalTag}"==="
+    echo "==="${DockerCategory}/${Base_devtool}:${ImageGlobalTag}"==="
+    echo "==="${DockerCategory}/${Base_publish}:latest"==="
+    echo "================================="
+    echo ""
 }
 
 main
