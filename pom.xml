@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.airta.action</groupId>
 	<artifactId>agent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>agent</name>
 	<description>ActionAgent service with SpringBoot</description>
 

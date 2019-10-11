@@ -5,6 +5,8 @@
 FROM airta/agent_base_2_browser:{{ versionPlaceHolder }}
 LABEL authors="Allen Yin <yinxinla@163.com>"
 
+USER root
+
 RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     jq \
@@ -18,3 +20,5 @@ RUN apt-get -qqy update \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8 \
   && sed -i 's/securerandom\.source=file:\/dev\/random/securerandom\.source=file:\/dev\/urandom/' ./usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/java.security
+
+USER airbot
