@@ -14,7 +14,8 @@ public class ActionSubscriber {
 
     @KafkaListener(topics = {"flow"})
     public void listen(ConsumerRecord<?, ?> record) {
-        logger.info("listen flow topic: " + record.key());
-        logger.info("listen flow topic value: " + record.value().toString());
+        logger.info("listen action topic: " + record.key());
+        logger.info("listen action topic value: " + record.value().toString());
+
     }
 }
