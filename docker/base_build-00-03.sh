@@ -35,7 +35,7 @@ function main() {
   build_all
   release_version
   print_all
-#  clearLocal_version
+  clearLocal_version
 }
 
 # build entry for overall.
@@ -103,11 +103,11 @@ function release_version() {
 
 function clearLocal_version() {
   echo "clearing local image caches .."
-  docker rm -f ${DockerCategory}/${Base_init}:${ImageGlobalTag}
-  docker rm -f ${DockerCategory}/${Base_graph}:${ImageGlobalTag}
-  docker rm -f ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
-  docker rm -f ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
-  docker rm -f ${DockerCategory}/${Base_publish}:latest
+  docker rmi -f ${DockerCategory}/${Base_init}:${ImageGlobalTag}
+  docker rmi -f ${DockerCategory}/${Base_graph}:${ImageGlobalTag}
+  docker rmi -f ${DockerCategory}/${Base_browser}:${ImageGlobalTag}
+  docker rmi -f ${DockerCategory}/${Base_devtool}:${ImageGlobalTag}
+#  docker rm -f ${DockerCategory}/${Base_publish}:latest
 }
 
 function print_all() {
