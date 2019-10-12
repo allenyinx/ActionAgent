@@ -75,7 +75,7 @@ COPY start-xvfb.sh \
 # Supervisor configuration file
 #==============================
 COPY graph.conf /etc/supervisor/conf.d/
-
+RUN sudo chmod +x /opt/bin/start-xvfb.sh
 
 #============================
 # Some configuration options

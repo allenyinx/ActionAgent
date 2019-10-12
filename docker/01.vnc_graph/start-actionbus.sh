@@ -13,9 +13,9 @@ fi
 
 rm -f /tmp/.X*lock
 
-java ${JAVA_OPTS} -cp ${JAVA_CLASSPATH:-"/opt/airbot/*:."} org.openqa.grid.selenium.GridLauncherV3 \
-  -role node \
-  -hub http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT/grid/register \
-  ${REMOTE_HOST_PARAM} \
-  -nodeConfig /opt/selenium/config.json \
-  ${SE_OPTS}
+#java ${JAVA_OPTS} -cp ${JAVA_CLASSPATH:-"/opt/airbot/*:."} org.openqa.grid.selenium.GridLauncherV3 \
+#  -role node \
+#  -hub http://$HUB_PORT_4444_TCP_ADDR:$HUB_PORT_4444_TCP_PORT/grid/register \
+#  ${REMOTE_HOST_PARAM} \
+#  -nodeConfig /opt/selenium/config.json \
+#  ${SE_OPTS}
