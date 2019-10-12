@@ -9,6 +9,7 @@ USER root
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     xvfb \
+    fluxbox \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
 
 #==============================
