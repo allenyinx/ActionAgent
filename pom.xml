@@ -12,7 +12,7 @@
 	<artifactId>agent</artifactId>
 	<version>1.0.0</version>
 	<name>agent</name>
-	<description>ActionAgent service with SpringBoot</description>
+	<description>ActionAgent service booted by SpringBoot</description>
 
 	<properties>
 		<java.version>8</java.version>
