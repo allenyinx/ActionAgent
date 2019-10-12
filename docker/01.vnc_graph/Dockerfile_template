@@ -69,6 +69,7 @@ USER airbot
 # Scripts to run Selenium Node and XVFB
 #==============================
 COPY start-xvfb.sh \
+     functions.sh \
       /opt/bin/
 
 #==============================
@@ -76,6 +77,7 @@ COPY start-xvfb.sh \
 #==============================
 COPY graph.conf /etc/supervisor/conf.d/
 RUN sudo chmod +x /opt/bin/start-xvfb.sh
+RUN sudo chmod +x /opt/bin/functions.sh
 
 #============================
 # Some configuration options
