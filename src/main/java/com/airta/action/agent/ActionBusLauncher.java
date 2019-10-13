@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ActionBusLauncher {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(ActionBusLauncher.class, args);
 	}
 

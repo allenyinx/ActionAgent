@@ -11,7 +11,9 @@ RUN apt-get update -qqy \
     xvfb \
     x11vnc \
     fluxbox \
-  && rm -rf /var/lib/apt/lists/* /var/cache/apt/*
+  && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
+  && mkdir -p /root/.vnc \
+  && x11vnc -storepasswd secret ~/.vnc/passwd
 
 #==============================
 # Locale and encoding settings
