@@ -50,9 +50,8 @@ RUN if [ -z "$CHROME_DRIVER_VERSION" ]; \
   && rm -rf /opt/airbot/chromedriver \
   && unzip /tmp/chromedriver_linux64.zip -d /opt/airbot \
   && rm /tmp/chromedriver_linux64.zip \
-  && mv /opt/airbot/chromedriver /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION \
-  && chmod 755 /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION \
-  && sudo ln -fs /opt/airbot/chromedriver-$CHROME_DRIVER_VERSION /usr/bin/chromedriver
+  && chmod 755 /opt/airbot/chromedriver \
+  && sudo ln -fs /opt/airbot/chromedriver /usr/bin/chromedriver
 
 # Generating a default config during build time
 RUN /opt/bin/generate_config.sh > /opt/airbot/config.json

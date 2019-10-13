@@ -53,6 +53,6 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private static void prepareEnvironment() {
 
-        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "/opt/airbot/chromedriver");
     }
 }
