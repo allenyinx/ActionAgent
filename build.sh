@@ -9,5 +9,5 @@ ImageGlobalTag=${Release}-${timestamp}
 ./mvnw clean
 ./mvnw package
 
-docker build -t ${DockerCategory}/${NAME}:${ImageGlobalTag} -f Dockerfile . || exit 1
+docker build --no-cache -t ${DockerCategory}/${NAME}:${ImageGlobalTag} -f Dockerfile . || exit 1
 docker push ${DockerCategory}/${NAME}:${ImageGlobalTag}
