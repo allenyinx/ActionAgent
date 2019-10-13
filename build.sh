@@ -7,7 +7,7 @@ timestamp=$(date +"%Y%m%d%H.%s")
 ImageGlobalTag=${Release}-${timestamp}
 
 ./mvnw clean
-./mvnw package
+./mvnw package -DskipTests
 
 docker pull airta/agent_base_publish:latest
 docker build --no-cache -t ${DockerCategory}/${NAME}:${ImageGlobalTag} -f Dockerfile . || exit 1
