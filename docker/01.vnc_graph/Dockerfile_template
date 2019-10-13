@@ -3,6 +3,8 @@ LABEL authors="Allen Yin <yinxinla@163.com>"
 
 USER root
 
+RUN chown -R airbot:airbot /home/airbot/
+
 #==============
 # Xvfb
 #==============
