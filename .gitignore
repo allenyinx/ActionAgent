@@ -27,7 +27,7 @@ target/
 /.nb-gradle/
 build/
 
-driver/*
+
 
 ### VS Code ###
 .vscode/
