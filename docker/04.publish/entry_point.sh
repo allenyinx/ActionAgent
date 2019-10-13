@@ -45,6 +45,6 @@ x11vnc -forever -usepw -shared -rfbport 5900 -display $DISPLAY &
 
 #/home/seluser/auto/filebeat-6.2.1-linux-x86_64/filebeat -e -c /home/seluser/auto/filebeat-6.2.1-linux-x86_64/filebeat.yml -d "publish" &
 
-/home/airbot/auto/noVNC/utils/launch.sh --vnc localhost:5900 &
+#/home/airbot/auto/noVNC/utils/launch.sh --vnc localhost:5900 &
 
 wait $NODE_PID

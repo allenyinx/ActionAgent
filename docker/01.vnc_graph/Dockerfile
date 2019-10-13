@@ -9,7 +9,6 @@ USER root
 RUN apt-get update -qqy \
   && apt-get -qqy install \
     xvfb \
-    x11vnc \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && mkdir -p /root/.vnc \
   && x11vnc -storepasswd secret ~/.vnc/passwd
@@ -57,6 +56,7 @@ RUN apt-get -qqy update \
     fonts-ipafont-gothic \
     fonts-wqy-zenhei \
     fonts-tlwg-loma-otf \
+    x11vnc \
     ttf-ubuntu-font-family \
   && rm -rf /var/lib/apt/lists/* \
   && apt-get -qyy clean
