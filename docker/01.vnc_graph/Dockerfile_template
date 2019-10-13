@@ -3,7 +3,7 @@ LABEL authors="Allen Yin <yinxinla@163.com>"
 
 USER root
 
-RUN chown -R airbot:airbot /home/airbot/
+
 
 #==============
 # Xvfb
@@ -16,6 +16,8 @@ RUN apt-get update -qqy \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
   && mkdir -p /home/airbot/.vnc \
   && x11vnc -storepasswd secret /home/airbot/.vnc/passwd
+
+RUN chown -R airbot:airbot /home/airbot/
 
 #==============================
 # Locale and encoding settings
