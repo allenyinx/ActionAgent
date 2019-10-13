@@ -25,7 +25,7 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private static WebDriver launchBrowser(ChromeOptions chromeOptions) {
 
-//        prepareEnvironment();
+        prepareEnvironment();
         WebDriver driver = new ChromeDriver(chromeOptions);
         navigateURL(driver, DriverConfig.ENTRY_PAGE);
 
@@ -53,6 +53,6 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private static void prepareEnvironment() {
 
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
+        System.setProperty("webdriver.chrome.driver", "/usr/bin/chromedriver");
     }
 }
