@@ -35,7 +35,9 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
     private static void navigateURL(WebDriver webDriver, String url) {
         try {
             webDriver.get(url);
-
+            log.info("\n###########################");
+            log.info("## Current page title: {}", webDriver.getTitle());
+            log.info("\n###########################");
         } catch (TimeoutException e) {
             e.printStackTrace();
             webDriver.navigate().refresh();
