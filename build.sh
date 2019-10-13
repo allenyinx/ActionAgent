@@ -9,5 +9,6 @@ ImageGlobalTag=${Release}-${timestamp}
 ./mvnw clean
 ./mvnw package
 
+docker pull airta/agent_base_publish:latest
 docker build --no-cache -t ${DockerCategory}/${NAME}:${ImageGlobalTag} -f Dockerfile . || exit 1
 docker push ${DockerCategory}/${NAME}:${ImageGlobalTag}
