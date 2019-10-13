@@ -12,8 +12,8 @@ RUN apt-get update -qqy \
     x11vnc \
     fluxbox \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && mkdir -p /root/.vnc \
-  && x11vnc -storepasswd secret ~/.vnc/passwd
+  && mkdir -p /home/airbot/.vnc \
+  && x11vnc -storepasswd secret /home/airbot/.vnc/passwd
 
 #==============================
 # Locale and encoding settings
