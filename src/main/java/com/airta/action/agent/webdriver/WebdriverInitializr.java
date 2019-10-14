@@ -1,10 +1,8 @@
 package com.airta.action.agent.webdriver;
 
-import com.airta.action.agent.webdriver.chrome.ChromeConfig;
-import org.openqa.selenium.TimeoutException;
+import com.airta.action.agent.utility.HtmlParser;
+import com.airta.action.agent.utility.WebDriverStart;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -16,45 +14,31 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private static final Logger log = LoggerFactory.getLogger(WebdriverInitializr.class);
 
+    public static WebDriver webDriver = null;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         log.info("## WebdriverInitializr initialization logic ...");
 
-        launchBrowser(ChromeConfig.initiate());
-    }
+        webDriver = WebDriverStart.browserEntry();
 
-    private static WebDriver launchBrowser(ChromeOptions chromeOptions) {
-
-        prepareEnvironment();
-        WebDriver driver = new ChromeDriver(chromeOptions);
-        navigateURL(driver, DriverConfig.ENTRY_PAGE);
-
-        return driver;
-    }
-
-    private static void navigateURL(WebDriver webDriver, String url) {
+        String entryPageSource = "";
         try {
-            webDriver.get(url);
-            log.info("\n###########################");
-            log.info("## Current page title: {}", webDriver.getTitle());
-            log.info("\n###########################");
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-            webDriver.navigate().refresh();
-        } catch (Exception e1) {
-            e1.printStackTrace();
+            entryPageSource = webDriver.getPageSource();
+
+        } catch (Exception e) {
+            log.error(e.getLocalizedMessage());
             try {
-                webDriver.navigate().refresh();
-            } catch (Exception e2) {
-                e2.printStackTrace();
-                return;
+                entryPageSource = webDriver.getPageSource();
+
+            } catch (Exception e1) {
+                log.error(e1.getLocalizedMessage());
+                entryPageSource = webDriver.getPageSource();
             }
-
         }
-    }
 
-    private static void prepareEnvironment() {
+        log.info("## Initialized webDriver session {}", entryPageSource.length());
+        log.info("## Fetch embedded children links {}", HtmlParser.parseChildLinks(entryPageSource).size());
 
-        System.setProperty("webdriver.chrome.driver", "/home/airbot/chromedriver");
     }
 }
