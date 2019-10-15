@@ -1,9 +1,9 @@
 package com.airta.action.agent.message;
 
 import com.airta.action.agent.entity.DriverConfig;
-import com.airta.action.agent.webdriver.WebDriverState;
+import com.airta.action.agent.action.ActionExecutor;
+import com.airta.action.agent.handler.InputInvalidHandler;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,15 +30,25 @@ public class ActionSubscriber {
         logger.info("listen action key: " + record.key());
         logger.info("listen action topic value: " + record.value().toString());
 
-        Object storedSessionObject = servletContext.getAttribute(DriverConfig.WebDriverSessionKey);
-        logger.info(storedSessionObject!=null?"session not null":"session null");
+        WebDriver driver = restoreWebDriverSession();
 
-        if(record.value().toString().equals("print")) {
-            logger.info(((WebDriver)storedSessionObject).getPageSource());
-        } else if(record.value().toString().equals("login")) {
-            ((WebDriver)storedSessionObject).findElement(By.name("登录")).click();
-        } else if(record.value().toString().equals("back") ) {
-            ((WebDriver)storedSessionObject).navigate().back();
+        if(driver==null || record.value()==null) {
+            InputInvalidHandler.getInstance().run(record.key(), record.value());
+        } else {
+            ActionExecutor.getInstance().run(record.key() == null ? "" : record.key().toString(),
+                    record.value() == null ? "" : record.value().toString(),
+                    driver);
+        }
+    }
+
+    private WebDriver restoreWebDriverSession() {
+
+        Object storedSessionObject = servletContext.getAttribute(DriverConfig.WebDriverSessionKey);
+        logger.info(storedSessionObject != null ? "session not null" : "session null");
+        if (storedSessionObject == null) {
+            return null;
+        } else {
+            return (WebDriver) storedSessionObject;
         }
     }
 }
