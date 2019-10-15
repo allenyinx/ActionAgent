@@ -4,6 +4,7 @@ import com.airta.action.agent.entity.DeviceType;
 import com.airta.action.agent.entity.DriverConfig;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
+import com.airta.action.agent.webdriver.chrome.ChromeConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -67,7 +68,7 @@ public class WebDriverStart {
 
     public static WebDriver browserEntry() {
 
-        prepareEnvironment();
+        ChromeConfig.prepareEnvironment();
 
         if (CHROME_HEADLESS) {
             headless_normal();
@@ -191,15 +192,6 @@ public class WebDriverStart {
         navigateURL(driver, DriverConfig.ENTRY_PAGE);
 
         return driver;
-    }
-
-    private static void prepareEnvironment() {
-
-//        System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
-//        ScreenshotAction.actionBuilder().clearImageFolder();
-//        LogAction.actionBuilder().clearLogFolder();
-//        LogAction.actionBuilder().clearDuplicateFolder();
     }
 
     private static void setImageDisplayLayers(ChromeOptions chromeOptions) {

@@ -87,9 +87,9 @@ public class ChromeConfig {
         chromeOptions.setCapability(CapabilityType.LOGGING_PREFS, logPrefs);
     }
 
-    private static void prepareEnvironment() {
+    public static void prepareEnvironment() {
 
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
-//        System.setProperty("webdriver.chrome.driver", "/home/airbot/chromedriver");
+//        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
+        System.setProperty("webdriver.chrome.driver", "/home/airbot/chromedriver");
     }
 }
