@@ -29,5 +29,6 @@ public final class DriverConfig {
     public static final String SITEMAP_PATH = "record/sitemap.xml";
 
     public static final String WebDriverSessionKey = "webDriverSession";
+    public static final String WebDriverSessionStatus = "webDriverSessionStatus";
 
 }

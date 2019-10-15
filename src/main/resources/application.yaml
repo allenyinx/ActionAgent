@@ -6,6 +6,14 @@ server:
 app:
   name: actionAgent
   description: ${app.name} with Spring Boot boosted.
+logging:
+  level:
+    org.springframework.web: INFO
+    org.apache.kafka: WARN
+    org.springframework.kafka.listener: WARN
+  file:
+    name: logs/airgent.log
+    path: logs
 
 ---
 spring:
@@ -60,7 +68,7 @@ kafka:
     topic: action
     group:
       id: test
-    concurrency: 10
+    concurrency: 1
   producer:
     servers: 40.117.113.67:9092
     retries: 0

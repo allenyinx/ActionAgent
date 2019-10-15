@@ -3,6 +3,7 @@ package com.airta.action.agent.context;
 import com.airta.action.agent.entity.DriverConfig;
 import com.airta.action.agent.utility.HtmlParser;
 import com.airta.action.agent.utility.WebDriverStart;
+import com.airta.action.agent.webdriver.WebDriverState;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,5 +51,6 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
         log.info("## Fetch embedded children links {}", HtmlParser.parseChildLinks(entryPageSource).size());
 
         servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
+        servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);
     }
 }
