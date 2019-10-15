@@ -28,4 +28,6 @@ public final class DriverConfig {
     public static final String DUPLICATE_URL_FOLDER = "record/duplicate/";
     public static final String SITEMAP_PATH = "record/sitemap.xml";
 
+    public static final String WebDriverSessionKey = "webDriverSession";
+
 }

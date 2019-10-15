@@ -1,20 +1,29 @@
-package com.airta.action.agent.webdriver;
+package com.airta.action.agent.context;
 
+import com.airta.action.agent.entity.DriverConfig;
 import com.airta.action.agent.utility.HtmlParser;
 import com.airta.action.agent.utility.WebDriverStart;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.ServletContext;
+
 @Component
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class WebdriverInitializr implements ApplicationListener<ApplicationReadyEvent> {
 
     private static final Logger log = LoggerFactory.getLogger(WebdriverInitializr.class);
 
     public static WebDriver webDriver = null;
+
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    @Autowired
+    ServletContext servletContext;
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
@@ -40,5 +49,6 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
         log.info("## Initialized webDriver session {}", entryPageSource.length());
         log.info("## Fetch embedded children links {}", HtmlParser.parseChildLinks(entryPageSource).size());
 
+        servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
     }
 }

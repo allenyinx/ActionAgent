@@ -195,8 +195,8 @@ public class WebDriverStart {
 
     private static void prepareEnvironment() {
 
-        System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
-//        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
+//        System.setProperty("webdriver.chrome.driver", "driver/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "driver/chromedriver_76");
 //        ScreenshotAction.actionBuilder().clearImageFolder();
 //        LogAction.actionBuilder().clearLogFolder();
 //        LogAction.actionBuilder().clearDuplicateFolder();
