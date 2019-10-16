@@ -1,4 +1,4 @@
-package com.airta.action.agent.action.raw;
+package com.airta.action.agent.action.raw.fields;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -6,6 +6,8 @@ public enum RawActionType {
 
     @SerializedName("CLICK")
     CLICK,
+    @SerializedName("SUBMIT")
+    SUBMIT,
     @SerializedName("INPUT")
     INPUT,
     @SerializedName("SELECT")
@@ -38,6 +40,8 @@ public enum RawActionType {
     INITHOME,
     @SerializedName("TEARDOWN")
     TEARDOWN,
+    @SerializedName("CLEAR")
+    CLEAR,
     @SerializedName("STARTFROM")
     STARTFROM,
     @SerializedName("GOTOPAGE")

@@ -1,5 +1,8 @@
 package com.airta.action.agent.action.raw;
 
+import com.airta.action.agent.action.raw.fields.RawActionContext;
+import com.airta.action.agent.action.raw.fields.RawActionData;
+import com.airta.action.agent.action.raw.fields.RawActionType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;

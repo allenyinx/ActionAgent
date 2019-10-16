@@ -1,4 +1,4 @@
-package com.airta.action.agent.action.raw;
+package com.airta.action.agent.action.raw.fields;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class RawActionData implements Serializable {
 
     private String actionData = "";
-    private String elementPath = "";
+    private ElementLocation elementPath;
 
     public String getActionData() {
         return actionData;
@@ -18,11 +18,11 @@ public class RawActionData implements Serializable {
         this.actionData = actionData;
     }
 
-    public String getElementPath() {
+    public ElementLocation getElementPath() {
         return elementPath;
     }
 
-    public void setElementPath(String elementPath) {
+    public void setElementPath(ElementLocation elementPath) {
         this.elementPath = elementPath;
     }
 }

@@ -11,9 +11,9 @@ public class JsonParser {
 
     protected final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    public Object resolveIncomingMessage(String topic, String key, String value, Class objectClass) {
+    public Object resolveIncomingMessage(String value, Class objectClass) {
 
-        log.info("topic {}, key {}, message {} resolved. ", topic, key, value);
+        log.info("message {} resolved. ", value);
 
         /**
          * may incoming JSON message

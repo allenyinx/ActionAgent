@@ -1,15 +1,15 @@
-package com.airta.action.agent.action.type;
+package com.airta.action.agent.webdriver;
 
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class DoAction implements IAction {
+public class WebDriverWrapUp {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver webDriver;
 
-    protected DoAction(WebDriver webDriver) {
+    public WebDriverWrapUp(WebDriver webDriver) {
         this.webDriver = webDriver;
     }
 }

@@ -1,4 +1,4 @@
-package com.airta.action.agent.webdriver.chrome;
+package com.airta.action.agent.browser;
 
 public class ChromeConfig {
 

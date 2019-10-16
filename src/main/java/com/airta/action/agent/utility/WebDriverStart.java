@@ -4,7 +4,7 @@ import com.airta.action.agent.entity.DeviceType;
 import com.airta.action.agent.entity.DriverConfig;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
-import com.airta.action.agent.webdriver.chrome.ChromeConfig;
+import com.airta.action.agent.browser.ChromeConfig;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;

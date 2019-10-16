@@ -1,4 +1,4 @@
-package com.airta.action.agent.action.raw;
+package com.airta.action.agent.action.raw.fields;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
