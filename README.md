@@ -17,12 +17,17 @@ webdriver agent
 * Headless Chromium
 * WebDriver
 * Report
+* Kafka message consumer
+* Screenshots
+* Log, reports, console info
+* Produce kafka message to sitemap
+* Parse and exec kinds of actions
 
 Install
 =======
 
 The quick way::
 
-    docker run airgent:latest
+    docker run -p 5900:5900 airta/airgent:latest
 
 For more details see the install section in the documentation:
