@@ -1,7 +1,7 @@
 package com.airta.action.agent.action;
 
 import com.airta.action.agent.action.raw.RawAction;
-import com.airta.action.agent.utility.JsonParser;
+import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
