@@ -19,6 +19,6 @@ public class ActionExecutor {
 
     public void run(String key, String value, WebDriver webDriver) {
 
-        ActionType.getInstance().getActionInstance(value, webDriver).exec(key, value);
+        ActionFactory.getInstance().getActionInstance(value, webDriver).exec(key, value);
     }
 }

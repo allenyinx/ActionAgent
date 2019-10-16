@@ -6,17 +6,17 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ActionType {
+public class ActionFactory {
 
-    private static ActionType actionType = null;
+    private static ActionFactory actionFactory = null;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    public static ActionType getInstance() {
+    public static ActionFactory getInstance() {
 
-        if(actionType ==null) {
-            actionType = new ActionType();
+        if(actionFactory ==null) {
+            actionFactory = new ActionFactory();
         }
-        return actionType;
+        return actionFactory;
     }
 
     public IAction getActionInstance(String value, WebDriver webDriver) {
