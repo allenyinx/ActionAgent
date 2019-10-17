@@ -14,7 +14,7 @@ public class RawActionData implements Serializable {
 
         return "\n  [" + "\n" +
                 "   actionData: " + getActionData() + "\n" +
-                "   elementPath: " + getElementPath().toString() + "\n" +
+                "   elementPath: " + getElementPath() + "\n" +
                 "  ]\n";
     }
 

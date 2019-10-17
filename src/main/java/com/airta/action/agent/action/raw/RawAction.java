@@ -26,7 +26,7 @@ public class RawAction implements Serializable {
 
         return "\n[" + "\n" +
                 " id: " + getId() + "\n" +
-                " action: " + getAction().toString() + "\n" +
+                " action: " + getAction() + "\n" +
                 " data: " + getData() + "\n" +
                 " context: " + getContext() + "\n" +
                 "]\n";

@@ -10,7 +10,7 @@ public abstract class AbstractDebugAction implements IAction {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    protected final String debugRecordFolder = "/home/airbot/share/";
+    protected final String debugRecordFolder = "/home/airbot/share";
 
     protected WebDriver webDriver;
     protected WebDriverLocator webDriverLocator;
