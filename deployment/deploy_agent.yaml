@@ -1,0 +1,55 @@
+kind: Deployment
+apiVersion: extensions/v1beta1
+metadata:
+  name: deploy-agent
+  namespace: airgent
+  labels:
+    app: airgent
+    release: phase1
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: airgent
+        release: phase1
+    spec:
+      volumes:
+        - name: sharedata
+          persistentVolumeClaim:
+            claimName: pvc-airgent
+      containers:
+        - name: agent
+          image: airta/airgent:1.0-2019101709.1571304193
+          resources:
+            limits:
+              cpu: 2
+              memory: 4Gi
+            requests:
+              cpu: 100m
+              memory: 500Mi
+          ports:
+            - name: http
+              containerPort: 8228
+            - name: vnc
+              containerPort: 5900
+          volumeMounts:
+            - name: sharedata
+              mountPath: /home/airbot/share/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: airgent-service
+  namespace: airgent
+spec:
+  ports:
+    - name: http
+      port: 8228
+      targetPort: 8228
+    - name: vnc
+      port: 5900
+      targetPort: 5900
+  selector:
+    app: airgent
+  type: NodePort
