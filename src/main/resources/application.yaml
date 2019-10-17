@@ -49,6 +49,38 @@ kafka:
 
 ---
 spring:
+  profiles: local
+kafka:
+  consumer:
+    zookeeper:
+      connect: 40.117.113.67:2181
+    servers: 40.117.113.67:9092
+    enable:
+      auto:
+        commit: true
+    session:
+      timeout: 6000
+    auto:
+      commit:
+        interval: 100
+      offset:
+        reset: latest
+    topic: action
+    group:
+      id: test
+    concurrency: 10
+  producer:
+    servers: 40.117.113.67:9092
+    retries: 0
+    batch:
+      size: 4096
+    linger: 1
+    topic: report
+    buffer:
+      memory: 40960
+
+---
+spring:
   profiles: prod
 kafka:
   consumer:
