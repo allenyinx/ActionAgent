@@ -21,7 +21,7 @@ RUN apt-get update -qqy \
     xfonts-cyrillic \
     xfonts-scalable \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
-  && apt-get -qyy clean
+  && apt-get -qyy clean \
   && mkdir -p /home/airbot/.vnc \
   && x11vnc -storepasswd secret /home/airbot/.vnc/passwd \
   && chown -R airbot:airbot /home/airbot/
