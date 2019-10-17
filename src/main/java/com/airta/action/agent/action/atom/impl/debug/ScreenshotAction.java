@@ -25,7 +25,7 @@ public class ScreenshotAction extends AbstractDebugAction {
 
         String destinationFilePath = buildDestinationPath(rawAction);
         if(StringUtils.isEmpty(destinationFilePath)) {
-            logger.warn("skip screenshot action for resource issue.");
+            logger.warn("## skip screenshot action for resource issue.");
             return;
         }
         File destFile=new File(destinationFilePath);
