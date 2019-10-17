@@ -29,4 +29,3 @@ The quick way::
 
     docker run -p 5900:5900 airta/airgent:latest
 
-
