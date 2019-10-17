@@ -7,12 +7,9 @@ LABEL authors="Allen Yin <yinxinla@163.com>"
 
 RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
-    unzip \
     jq \
     curl \
-    ant \
     vim \
-    git \
     net-tools \
   && apt-get autoclean \
   && apt-get autoremove \
