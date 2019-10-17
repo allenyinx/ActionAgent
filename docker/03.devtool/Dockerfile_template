@@ -11,9 +11,7 @@ RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     jq \
     curl \
-    ant \
     vim \
-    git \
     net-tools \
   && apt-get autoclean \
   && apt-get autoremove \

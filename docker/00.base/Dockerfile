@@ -20,14 +20,14 @@ RUN apt-get -qqy update \
   && apt-get -qqy --no-install-recommends install \
     bzip2 \
     ca-certificates \
-    openjdk-8-jre-headless \
-    tzdata \
-    unzip \
-    sudo \
-    wget \
     language-pack-en \
     locales \
+    openjdk-8-jre-headless \
+    sudo \
     supervisor \
+    tzdata \
+    unzip \
+    wget \
   && apt-get autoclean \
   && apt-get autoremove \
   && rm -rf /var/lib/apt/lists/* /var/cache/apt/* \
