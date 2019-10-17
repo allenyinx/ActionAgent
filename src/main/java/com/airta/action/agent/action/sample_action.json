@@ -1,0 +1,1 @@
+{"id": "demo_001","action": "PRINTSOURCE","data": {"actionData": "demo action input data","elementPath":{"type": "id_123456","value": "id"}},"context":{"pagePath": "01_02_03","session": "session_id_01","shouldFetchChildren": false,"shouldUpdateSiteMap": false,"shouldKeptAlive": true}}

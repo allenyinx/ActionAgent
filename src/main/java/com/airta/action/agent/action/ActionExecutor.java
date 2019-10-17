@@ -27,20 +27,35 @@ public class ActionExecutor {
 
     public void run(String key, String value, WebDriver webDriver) {
 
-        RawAction rawAction = resolveRawActionMessage(value);
-        if (rawAction != null) {
-            ActionFactory.getInstance().getActionInstance(rawAction, webDriver).exec(key, rawAction);
+        RawAction[] rawActions = resolveRawActionMessage(value);
+        if (rawActions != null && rawActions.length>0) {
+            runOrderedActions(key, rawActions, webDriver);
         } else {
             logger.warn("SKIP input Action message exec, since cannot be resolved.");
         }
     }
 
-    private RawAction resolveRawActionMessage(String rawData) {
+    private void runOrderedActions(String key, RawAction[] rawActions, WebDriver webDriver) {
 
-        if (jsonParser.isJSONValid(rawData)) {
+        for(RawAction rawAction: rawActions) {
+            logger.info("## RawAction info: {}", rawAction.toString());
+            ActionFactory.getInstance().getActionInstance(rawAction, webDriver).exec(key, rawAction);
+        }
+    }
+
+    private RawAction[] resolveRawActionMessage(String rawData) {
+
+        if (jsonParser.isJSONArray(rawData)) {
+            Object rawObject = jsonParser.resolveIncomingMessage(rawData, RawAction[].class);
+            if (rawObject != null) {
+                return (RawAction[]) rawObject;
+            } else {
+                logger.error("Cannot resolve raw data to expected RawAction");
+            }
+        } else if (jsonParser.isJSONValid(rawData)) {
             Object rawObject = jsonParser.resolveIncomingMessage(rawData, RawAction.class);
             if (rawObject != null) {
-                return (RawAction) rawObject;
+                return new RawAction[] { (RawAction) rawObject };
             } else {
                 logger.error("Cannot resolve raw data to expected RawAction");
             }

@@ -19,4 +19,8 @@ public abstract class AbstractContextAction implements IAction {
         webDriverOperater = new WebDriverOperater(this.webDriver);
         webDriverLocator = new WebDriverLocator(this.webDriver);
     }
+
+    public void interval() {
+        //TODO
+    }
 }

@@ -23,5 +23,7 @@ public class SubmitAction extends AbstractDoAction {
         ElementLocation elementPath = rawActionData.getElementPath();
         WebElement elementToBeClicked = webDriverLocator.findElement(elementPath);
         webDriverOperater.submit(elementToBeClicked);
+
+        interval();
     }
 }

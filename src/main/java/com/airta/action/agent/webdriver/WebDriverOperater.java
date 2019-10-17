@@ -3,6 +3,8 @@ package com.airta.action.agent.webdriver;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static java.util.concurrent.TimeUnit.SECONDS;
+
 public class WebDriverOperater extends WebDriverWrapUp {
 
     public WebDriverOperater(WebDriver webDriver) {
@@ -63,6 +65,25 @@ public class WebDriverOperater extends WebDriverWrapUp {
             }
         }
         return false;
+    }
+
+    public void actionHalt() {
+
+        actionHalt(DefaultActionHaltInterval);
+    }
+
+    public void actionHalt(int seconds) {
+
+        try {
+            Thread.sleep(seconds * 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void waitForPageLoad() {
+
+        webDriver.manage().timeouts().pageLoadTimeout(30, SECONDS);
     }
 
     private boolean isValidElement(WebElement webElement) {

@@ -15,7 +15,12 @@ public abstract class AbstractDoAction implements IAction {
 
     protected AbstractDoAction(WebDriver webDriver) {
         this.webDriver = webDriver;
+
         webDriverOperater = new WebDriverOperater(this.webDriver);
         webDriverLocator = new WebDriverLocator(this.webDriver);
+    }
+
+    public void interval() {
+        webDriverOperater.actionHalt();
     }
 }

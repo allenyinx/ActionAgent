@@ -6,5 +6,6 @@ public interface IAction {
 
     void exec(String key, RawAction rawAction);
 
+    void interval();
 
 }

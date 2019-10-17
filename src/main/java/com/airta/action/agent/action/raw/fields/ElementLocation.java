@@ -10,6 +10,14 @@ public class ElementLocation implements Serializable {
     private String type = "";
     private String value = "";
 
+    public String toString() {
+
+        return "\n    [" + "\n" +
+                "     type: " + getType() + "\n" +
+                "     value: " + getValue() + "\n" +
+                "    ]\n";
+    }
+
     public String getType() {
         return type;
     }

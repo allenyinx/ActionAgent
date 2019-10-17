@@ -9,6 +9,12 @@ public class WebDriverWrapUp {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected WebDriver webDriver;
 
+    /**
+     * each interval between actions.
+     * will wait the specified interval after each action.
+     */
+    protected final static int DefaultActionHaltInterval = 3;
+
     public WebDriverWrapUp(WebDriver webDriver) {
         this.webDriver = webDriver;
     }

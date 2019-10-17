@@ -23,5 +23,7 @@ public class ClickAction extends AbstractDoAction {
         ElementLocation elementPath = rawActionData.getElementPath();
         WebElement elementToBeClicked = webDriverLocator.findElement(elementPath);
         webDriverOperater.click(elementToBeClicked);
+
+        interval();
     }
 }

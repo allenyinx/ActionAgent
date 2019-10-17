@@ -23,5 +23,7 @@ public class SelectAction extends AbstractDoAction {
         ElementLocation elementPath = rawActionData.getElementPath();
         WebElement elementToBeInput = webDriverLocator.findElement(elementPath);
         webDriverOperater.select(elementToBeInput, rawActionData.getActionData());
+
+        interval();
     }
 }

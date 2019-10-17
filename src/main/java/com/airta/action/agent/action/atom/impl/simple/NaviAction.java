@@ -13,16 +13,21 @@ public class NaviAction extends AbstractDoAction {
     @Override
     public void exec(String key, RawAction rawAction) {
 
-        logger.info("## Navi action");
+        logger.info("## Navi action: {}", rawAction.getAction());
         switch (rawAction.getAction()) {
             case NAVI_BACK:
                 webDriver.navigate().back();
+                break;
             case NAVI_FORWARD:
                 webDriver.navigate().forward();
+                break;
             case NAVI_REFRESH:
                 webDriver.navigate().refresh();
+                break;
             default:
                 logger.warn("Unknown navigation action.");
         }
+
+        interval();
     }
 }

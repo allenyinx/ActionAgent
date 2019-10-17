@@ -16,12 +16,14 @@ public class InputAction extends AbstractDoAction {
 
     @Override
     public void exec(String key, RawAction rawAction) {
-        logger.info("## Input action");
+        logger.info("## Input action within: {}:{}", rawAction.getData().getElementPath().getType(), rawAction.getData().getElementPath().getValue());
         RawActionContext rawActionContext = rawAction.getContext();
         RawActionData rawActionData = rawAction.getData();
 
         ElementLocation elementPath = rawActionData.getElementPath();
         WebElement elementToBeInput = webDriverLocator.findElement(elementPath);
         webDriverOperater.input(elementToBeInput, rawActionData.getActionData());
+
+        interval();
     }
 }

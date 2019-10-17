@@ -18,4 +18,8 @@ public abstract class AbstractDebugAction implements IAction {
         webDriverLocator = new WebDriverLocator(this.webDriver);
         webDriverCapturer = new WebDriverCapturer(this.webDriver);
     }
+
+    public void interval() {
+        //TODO
+    }
 }

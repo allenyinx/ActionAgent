@@ -4,11 +4,19 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
 
-@JsonIgnoreProperties(ignoreUnknown=true)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RawActionData implements Serializable {
 
     private String actionData = "";
     private ElementLocation elementPath;
+
+    public String toString() {
+
+        return "\n  [" + "\n" +
+                "   actionData: " + getActionData() + "\n" +
+                "   elementPath: " + getElementPath().toString() + "\n" +
+                "  ]\n";
+    }
 
     public String getActionData() {
         return actionData;
