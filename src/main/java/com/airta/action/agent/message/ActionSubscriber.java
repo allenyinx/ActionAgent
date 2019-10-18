@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ public class ActionSubscriber {
     @Autowired
     ServletContext servletContext;
 
+    @Value("${agent.init}")
+    private boolean initAgentWhenStartup;
+
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @KafkaListener(topics = {"action"})
@@ -30,7 +34,12 @@ public class ActionSubscriber {
         logger.info("listen action key: " + record.key());
         logger.info("listen action topic value: " + record.value().toString());
 
-        WebDriver driver = restoreWebDriverSession();
+        WebDriver driver = null;
+        if(initAgentWhenStartup) {
+            driver = restoreWebDriverSession();
+        } else {
+            logger.warn("agent not initiated yet, try do first init.");
+        }
 
         if(driver==null || record.value()==null) {
             InputInvalidHandler.getInstance().run(record.key(), record.value());

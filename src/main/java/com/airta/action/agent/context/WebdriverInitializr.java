@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
@@ -26,9 +27,19 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
     @Autowired
     ServletContext servletContext;
 
+    @Value("${agent.init}")
+    private boolean initAgentWhenStartup;
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         log.info("## WebdriverInitializr initialization logic ...");
+
+        if(initAgentWhenStartup) {
+            initWebDriver(applicationReadyEvent);
+        }
+    }
+
+    private void initWebDriver(ApplicationReadyEvent applicationReadyEvent) {
 
         webDriver = WebDriverStart.browserEntry();
 
