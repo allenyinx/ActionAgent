@@ -2,6 +2,7 @@ package com.airta.action.agent.action;
 
 import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.action.raw.RawAction;
+import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -23,6 +24,9 @@ public class ActionExecutor {
     @Autowired
     private ActionFactory actionFactory;
 
+    @Autowired
+    private ActionResultProducer actionResultProducer;
+
     public void run(String key, String value, WebDriver webDriver) {
 
         RawAction[] rawActions = resolveRawActionMessage(value);
@@ -40,7 +44,7 @@ public class ActionExecutor {
 
             IAction action = actionFactory.getActionInstance(rawAction, webDriver);
             action.exec(key, rawAction);
-            action.report(key, rawAction);
+            action.report(key, rawAction, actionResultProducer);
         }
     }
 
