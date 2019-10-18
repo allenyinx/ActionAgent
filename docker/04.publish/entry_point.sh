@@ -38,7 +38,7 @@ done
 
 fluxbox -display $DISPLAY &
 
-x11vnc -forever -usepw -shared -rfbport 5900 -display $DISPLAY &
+x11vnc -forever -usepw -noxdamage -shared -rfbport 5900 -display $DISPLAY &
 
 #export SAF_REST_API_OPTS='-Xms1024m -Xmx2048m'
 #/home/seluser/auto/saf-rest-api/bin/saf-rest-api &
