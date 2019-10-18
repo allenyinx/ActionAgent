@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
  *
  * @author allenyin
  */
+@Component
 public class ActionResultProducer extends ResultProducer {
 
     @Value("${kafka.producer.topic}")
