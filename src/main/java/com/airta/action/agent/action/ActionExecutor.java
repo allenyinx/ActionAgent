@@ -1,29 +1,27 @@
 package com.airta.action.agent.action;
 
+import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * common entry for Action message handle.
  */
+@Component
 public class ActionExecutor {
 
-    private static ActionExecutor actionExecutor = null;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    private static JsonParser jsonParser = null;
+    @Autowired
+    private JsonParser jsonParser;
 
-    public static ActionExecutor getInstance() {
-
-        if (actionExecutor == null) {
-            actionExecutor = new ActionExecutor();
-            jsonParser = new JsonParser();
-        }
-        return actionExecutor;
-    }
+    @Autowired
+    private ActionFactory actionFactory;
 
     public void run(String key, String value, WebDriver webDriver) {
 
@@ -39,7 +37,10 @@ public class ActionExecutor {
 
         for(RawAction rawAction: rawActions) {
             logger.info("## RawAction info: {}", rawAction);
-            ActionFactory.getInstance().getActionInstance(rawAction, webDriver).exec(key, rawAction);
+
+            IAction action = actionFactory.getActionInstance(rawAction, webDriver);
+            action.exec(key, rawAction);
+            action.report(key, rawAction);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.airta.action.agent.action.atom;
 
+import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.webdriver.WebDriverCapturer;
 import com.airta.action.agent.webdriver.WebDriverLocator;
 import org.openqa.selenium.WebDriver;
@@ -20,6 +21,10 @@ public abstract class AbstractDebugAction implements IAction {
         this.webDriver = webDriver;
         webDriverLocator = new WebDriverLocator(this.webDriver);
         webDriverCapturer = new WebDriverCapturer(this.webDriver);
+    }
+
+    public void report(String key, RawAction rawAction) {
+
     }
 
     public void interval() {}

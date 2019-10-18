@@ -24,6 +24,12 @@ public class ActionSubscriber {
     @Autowired
     ServletContext servletContext;
 
+    @Autowired
+    private ActionExecutor actionExecutor;
+
+    @Autowired
+    private InputInvalidHandler inputInvalidHandler;
+
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
 
@@ -31,22 +37,23 @@ public class ActionSubscriber {
 
     @KafkaListener(topics = {"action"})
     public void listen(ConsumerRecord<?, ?> record) {
-        logger.info("listen action key: " + record.key());
-        logger.info("listen action topic value: " + record.value().toString());
+
+        String messageKey = record.key() == null ? "" : record.key().toString();
+        String messageValue = record.value() == null ? "" : record.value().toString();
+        logger.info("listen action key: " + messageKey);
+        logger.info("listen action topic value: " + messageValue);
 
         WebDriver driver = null;
-        if(initAgentWhenStartup) {
+        if (initAgentWhenStartup) {
             driver = restoreWebDriverSession();
         } else {
             logger.warn("agent not initiated yet, try do first init.");
         }
 
-        if(driver==null || record.value()==null) {
-            InputInvalidHandler.getInstance().run(record.key(), record.value());
+        if (driver == null || record.value() == null) {
+            inputInvalidHandler.run(record.key(), record.value());
         } else {
-            ActionExecutor.getInstance().run(record.key() == null ? "" : record.key().toString(),
-                    record.value() == null ? "" : record.value().toString(),
-                    driver);
+            actionExecutor.run(messageKey, messageValue, driver);
         }
     }
 

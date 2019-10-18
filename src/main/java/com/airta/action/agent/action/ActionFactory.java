@@ -13,22 +13,15 @@ import com.airta.action.agent.action.atom.IAction;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * Action factory to determine the actual action parser and operator.
  */
+@Component
 public class ActionFactory {
 
-    private static ActionFactory actionFactory = null;
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-
-    public static ActionFactory getInstance() {
-
-        if (actionFactory == null) {
-            actionFactory = new ActionFactory();
-        }
-        return actionFactory;
-    }
 
     public IAction getActionInstance(RawAction rawAction, WebDriver webDriver) {
 
