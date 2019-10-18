@@ -1,5 +1,8 @@
 # ActionAgent
-
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.springframework.boot/spring-boot-starter-parent/badge.svg)](https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-parent)
+[![Docker Hub](https://img.shields.io/docker/pulls/allenyinx/airgent.svg?style=flat)](https://cloud.docker.com/u/airta/repository/docker/airta/airgent/)
+[![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/allenyinx/ActionAgent.svg)](http://isitmaintained.com/project/allenyinx/ActionAgent "Average time to resolve an issue")
+[![Percentage of issues still open](http://isitmaintained.com/badge/open/allenyinx/ActionAgent.svg)](http://isitmaintained.com/project/allenyinx/ActionAgent "Percentage of issues still open")
 
 <p align="left">
     <a href="https://codecov.io/gh/allenyinx/ActionAgent"><img src="https://codecov.io/gh/allenyinx/ActionAgent/branch/develop/graph/badge.svg" /></a>

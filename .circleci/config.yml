@@ -37,5 +37,15 @@ jobs:
             - ~/.m2
           key: v1-dependencies-{{ checksum "pom.xml" }}
 
+      - run:
+          name: Analyze on SonarCloud
+          command: mvn verify sonar:sonar -Dsonar.projectKey=allenyinx_ActionAgent -Dsonar.organization=allenyinx -Dsonar.host.url=https://sonarcloud.io
+
       # run tests!
       - run: mvn test -Dspring.profiles.active=test
+
+workflows:
+  main:
+    jobs:
+      - build:
+          context: SonarCloud
