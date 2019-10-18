@@ -28,9 +28,8 @@ public class WebdriverEndding implements ApplicationListener<ApplicationFailedEv
     public void onApplicationEvent(ApplicationFailedEvent applicationFailedEvent) {
         if(initAgentWhenStartup) {
             Object storedSessionObject = servletContext.getAttribute(DriverConfig.WebDriverSessionKey);
-            if (storedSessionObject == null) {
-                return;
-            } else {
+            if (storedSessionObject != null) {
+                log.info("Ending webdriver session.");
                 WebDriver driver = (WebDriver) storedSessionObject;
                 driver.close();
             }

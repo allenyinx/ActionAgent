@@ -2,7 +2,6 @@ package com.airta.action.agent.action.atom.impl.simple;
 
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.ElementLocation;
-import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.action.raw.fields.RawActionData;
 import com.airta.action.agent.action.atom.AbstractDoAction;
 import org.openqa.selenium.WebDriver;
@@ -17,7 +16,6 @@ public class ClickAction extends AbstractDoAction {
     @Override
     public void exec(String key, RawAction rawAction) {
         logger.info("## Click action");
-        RawActionContext rawActionContext = rawAction.getContext();
         RawActionData rawActionData = rawAction.getData();
 
         ElementLocation elementPath = rawActionData.getElementPath();

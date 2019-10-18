@@ -6,6 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
+
 /**
  * common entry for Action message handle.
  */
@@ -38,7 +40,7 @@ public class ActionExecutor {
     private void runOrderedActions(String key, RawAction[] rawActions, WebDriver webDriver) {
 
         for(RawAction rawAction: rawActions) {
-            logger.info("## RawAction info: {}", rawAction.toString());
+            logger.info("## RawAction info: {}", rawAction);
             ActionFactory.getInstance().getActionInstance(rawAction, webDriver).exec(key, rawAction);
         }
     }
@@ -62,6 +64,6 @@ public class ActionExecutor {
         } else {
             logger.error("Input rawData is not standard JSON FORMAT!");
         }
-        return null;
+        return new RawAction[0];
     }
 }

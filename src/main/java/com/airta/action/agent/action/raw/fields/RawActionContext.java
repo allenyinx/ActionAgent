@@ -22,7 +22,7 @@ public class RawActionContext implements Serializable {
 
         return "\n  [" + "\n" +
                 "   pagePath: " + getPagePath() + "\n" +
-                "   session: " + getSession().toString() + "\n" +
+                "   session: " + getSession() + "\n" +
                 "   shouldFetchChildren: " + isShouldFetchChildren() + "\n" +
                 "   shouldUpdateSiteMap: " + isShouldUpdateSiteMap() + "\n" +
                 "   shouldKeptAlive: " + isShouldKeptAlive() + "\n" +

@@ -1,6 +1,5 @@
 package com.airta.action.agent.action.atom;
 
-import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.webdriver.WebDriverLocator;
 import com.airta.action.agent.webdriver.WebDriverOperater;
 import org.openqa.selenium.WebDriver;
