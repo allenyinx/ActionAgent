@@ -75,9 +75,10 @@ public class WebDriverOperater extends WebDriverWrapUp {
     public void actionHalt(int seconds) {
 
         try {
-            Thread.sleep(seconds * 1000);
+            Thread.sleep(seconds * 1_000L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
+            Thread.currentThread().interrupt();
         }
     }
 

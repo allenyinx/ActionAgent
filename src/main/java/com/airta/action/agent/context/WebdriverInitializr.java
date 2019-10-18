@@ -21,7 +21,7 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private static final Logger log = LoggerFactory.getLogger(WebdriverInitializr.class);
 
-    public static WebDriver webDriver = null;
+    private WebDriver webDriver = null;
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired

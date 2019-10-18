@@ -15,6 +15,8 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -59,9 +61,11 @@ public class WebDriverStart {
     public static final DeviceType DEVICE_TYPE = DeviceType.Android;
     public static final boolean CLIENT_MOCK = false;
 
-    public static int PAGE_DEPTH = 0;
+    private static int PAGE_DEPTH = 0;
 
-    public static int NavigateCount = 0;
+    private static int NavigateCount = 0;
+
+    protected static final Logger logger = LoggerFactory.getLogger(WebDriverStart.class);
 
     public static void main(String[] args) {
 
@@ -148,7 +152,7 @@ public class WebDriverStart {
                 try {
                     navigateURL(webDriver, childrenLinkList.get(index));
                 } catch (TimeoutException e1) {
-                    e1.printStackTrace();
+                    logger.error(e1.getLocalizedMessage());
                 }
 
                 scanAllChildrenLinks(webDriver, depth, childElement);
@@ -230,9 +234,10 @@ public class WebDriverStart {
         analyzeLog(webDriver);
 
         try {
-            Thread.sleep(BROWSER_LAST_PAGE_IDLE_SECOND * 1000);
+            Thread.sleep(BROWSER_LAST_PAGE_IDLE_SECOND * 1_000L);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
+            Thread.currentThread().interrupt();
         }
 
     }
@@ -242,7 +247,7 @@ public class WebDriverStart {
             String currentUrl = webDriver.getCurrentUrl();
             info("[DEPTH: " + PAGE_DEPTH++ + "] URL: " + webDriver.getCurrentUrl());
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
 
         blockSeperator();
@@ -266,7 +271,7 @@ public class WebDriverStart {
             jserrors = webDriver.manage().logs().get(LogType.BROWSER);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return;
         }
         for (LogEntry error : jserrors) {
@@ -297,7 +302,7 @@ public class WebDriverStart {
         try {
             webDriver.close();
         } catch (WebDriverException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             return;
         }
 
@@ -344,7 +349,7 @@ public class WebDriverStart {
         try {
             return webDriver.getPageSource();
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return "";
         }
     }
@@ -414,14 +419,14 @@ public class WebDriverStart {
 //            DuplicateAction.visitedList.add(url);
 
         } catch (TimeoutException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             webDriver.navigate().refresh();
         } catch (Exception e1) {
-            e1.printStackTrace();
+            logger.error(e1.getLocalizedMessage());
             try {
                 webDriver.navigate().refresh();
             } catch (Exception e2) {
-                e2.printStackTrace();
+                logger.error(e2.getLocalizedMessage());
                 return;
             }
 
@@ -459,7 +464,7 @@ public class WebDriverStart {
             Alert alert = webDriver.switchTo().alert();
             alert.accept();
         } catch (WebDriverException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 }

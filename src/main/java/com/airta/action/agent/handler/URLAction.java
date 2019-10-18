@@ -6,7 +6,7 @@ import java.util.List;
 
 public class URLAction {
 
-    public static URLAction urlAction = null;
+    private static URLAction urlAction = null;
 
     public static URLAction actionBuilder() {
         if (urlAction == null) {

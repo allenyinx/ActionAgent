@@ -1,5 +1,8 @@
 package com.airta.action.agent.utility.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,6 +12,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class FileUtil {
+
+    protected static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 
     public List<String> readPredefinedUrlList(String fileName) {
 
@@ -20,7 +25,7 @@ public class FileUtil {
 //                    .map(String::toUpperCase)
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
 
 //        list.forEach(System.out::println);

@@ -18,7 +18,7 @@ public class WebDriverCapturer extends WebDriverWrapUp {
             jserrors = webDriver.manage().logs().get(LogType.BROWSER);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return "";
         }
         for (LogEntry error : jserrors) {

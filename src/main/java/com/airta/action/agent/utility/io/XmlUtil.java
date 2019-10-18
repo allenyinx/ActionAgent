@@ -7,11 +7,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 
 public class XmlUtil {
+
+    protected static final Logger logger = LoggerFactory.getLogger(XmlUtil.class);
 
     public static void main(String[] args) throws IOException {
 
@@ -32,7 +36,7 @@ public class XmlUtil {
         try {
             xml = write2XMLString(element);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         System.out.println(xml);
@@ -42,7 +46,7 @@ public class XmlUtil {
         try {
             write2XMLFile(element, DriverConfig.SITEMAP_PATH);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
     }
 
@@ -71,7 +75,9 @@ public class XmlUtil {
 
         File xmlFile = new File(pathFile);
         if (xmlFile.exists()) {
-            xmlFile.delete();
+            if(xmlFile.delete()) {
+                logger.info("xml file deleted ..");
+            }
         }
 
         xmlMapper.writeValue(new File(pathFile), object);

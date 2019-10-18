@@ -6,6 +6,8 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 //import org.thymeleaf.util.StringUtils;
 
 import java.util.ArrayList;
@@ -13,7 +15,8 @@ import java.util.List;
 
 public class HtmlParser {
 
-    public static int num = -1, sum = 0;
+    private static final Logger logger = LoggerFactory.getLogger(HtmlParser.class);
+
     private static Document doc = null;
 
     /**
@@ -26,7 +29,7 @@ public class HtmlParser {
             doc = Jsoup.parse(pageContent);
         } catch (Exception e) {
             // Received failure 404
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return urlList;
         }
         Elements aLinks = doc.select("a[href]");
@@ -64,7 +67,7 @@ public class HtmlParser {
             doc = Jsoup.parse(pageContent);
         } catch (Exception e) {
             // Received failure 404
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return imageUrlList;
         }
         Elements imgLinks = doc.select("img[src]");
@@ -88,7 +91,7 @@ public class HtmlParser {
             doc = Jsoup.parse(pageContent);
         } catch (Exception e) {
             // Received failure 404
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
             return formList;
         }
         Elements imgLinks = doc.select("form[method]");

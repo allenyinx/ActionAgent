@@ -12,46 +12,46 @@ import org.springframework.util.StringUtils;
 
 public class JsonParser {
 
-    protected final Logger log = LoggerFactory.getLogger(this.getClass());
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     public Object resolveIncomingMessage(String value, Class objectClass) {
 
-        log.info("message {} resolved. ", value);
+        logger.info("message {} resolved. ", value);
         try {
-            log.info(OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(value));
+            logger.info(OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(value));
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
         }
 
         /**
          * may incoming JSON message
          */
         if (isJSONValid(value)) {
-            log.info("## valid json input, convert to jenkinsObject");
+            logger.info("## valid json input, convert to jenkinsObject");
 
             if (value.contains("\\")) {
-                log.info("## payload contains escape chars: {}", value);
+                logger.info("## payload contains escape chars: {}", value);
                 value = value.replaceAll("\\\\", "##");
             }
 
             return new Gson().fromJson(value, objectClass);
         } else {
-            log.warn("# Not standard JSON payloads, try formatting..");
+            logger.warn("# Not standard JSON payloads, try formatting..");
 
             try {
 
                 value = OBJECT_MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(format(value));
             } catch (JsonProcessingException e) {
-                log.error(e.getMessage());
+                logger.error(e.getMessage());
                 return null;
             }
             if (isJSONValid(value)) {
-                log.info("## valid json input, convert to jenkinsObject");
+                logger.info("## valid json input, convert to jenkinsObject");
 
                 return new Gson().fromJson(value, objectClass);
             } else {
-                log.warn("## not standard payloads, abort");
+                logger.warn("## not standard payloads, abort");
                 return null;
             }
         }
@@ -74,7 +74,7 @@ public class JsonParser {
                 return false;
             }
         }
-        log.info("## verified JSON input.");
+        logger.info("## verified JSON input.");
         return true;
     }
 
@@ -86,7 +86,7 @@ public class JsonParser {
         } catch (JSONException ex1) {
             return false;
         }
-        log.info("## verified JSON Array input.");
+        logger.info("## verified JSON Array input.");
         return true;
     }
 
