@@ -30,6 +30,8 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
 
+    private HtmlParser htmlParser = new HtmlParser();
+
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         log.info("## WebdriverInitializr initialization logic ...");
@@ -59,7 +61,7 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
         }
 
         log.info("## Initialized webDriver session {}", entryPageSource.length());
-        log.info("## Fetch embedded children links {}", HtmlParser.parseChildLinks(entryPageSource).size());
+        log.info("## Fetch embedded children links {}", htmlParser.parseChildLinks(entryPageSource).size());
 
         servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
         servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);

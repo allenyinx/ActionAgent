@@ -1,8 +1,11 @@
 package com.airta.action.agent.action.atom;
 
 import com.airta.action.agent.action.raw.RawAction;
+import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.message.ResultProducer;
+import com.airta.action.agent.utility.parser.JsonParser;
+import com.airta.action.agent.webdriver.WebDriverCapturer;
 import com.airta.action.agent.webdriver.WebDriverLocator;
 import com.airta.action.agent.webdriver.WebDriverOperater;
 import org.openqa.selenium.WebDriver;
@@ -15,20 +18,29 @@ public abstract class AbstractDoAction implements IAction {
     protected WebDriver webDriver;
     protected WebDriverOperater webDriverOperater;
     protected WebDriverLocator webDriverLocator;
+    protected WebDriverCapturer webDriverCapturer;
+
+    protected JsonParser jsonParser;
 
     protected AbstractDoAction(WebDriver webDriver) {
         this.webDriver = webDriver;
 
         webDriverOperater = new WebDriverOperater(this.webDriver);
         webDriverLocator = new WebDriverLocator(this.webDriver);
+        webDriverCapturer = new WebDriverCapturer(this.webDriver);
+
+        jsonParser = new JsonParser();
     }
 
     public void report(String key, RawAction rawAction, ResultProducer resultProducer) {
 
         logger.info("updating action report after execution.");
 
+        Element pageElement = webDriverCapturer.readPageElementsRightNow(rawAction);
 
-        ((ActionResultProducer)resultProducer).sendReportMessage(key, "");
+        String childElementContents = jsonParser.objectToJSONString(pageElement);
+        logger.info("## Read children element list content: {}", childElementContents);
+        ((ActionResultProducer)resultProducer).sendReportMessage(key, childElementContents);
     }
 
     public void interval() {

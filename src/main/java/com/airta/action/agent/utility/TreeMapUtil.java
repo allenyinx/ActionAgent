@@ -21,7 +21,7 @@ public class TreeMapUtil {
         childElement.setDepth(depth);
         childElement.setParentId(parentElement.getElementId());
         childElement.setActionable(true);
-        childElement.setType(type.name());
+        childElement.setType(type);
         switch (type) {
             case link:
             case image:

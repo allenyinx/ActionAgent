@@ -17,6 +17,19 @@ public class JsonParser {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
+    public String objectToJSONString(Object jsonObject) {
+
+        String jsonString = null;
+        try {
+            jsonString = OBJECT_MAPPER.writeValueAsString(jsonObject);
+        } catch (JsonProcessingException e) {
+            logger.error(e.getMessage());
+            return "";
+        }
+
+        return jsonString;
+    }
+
     public Object resolveIncomingMessage(String value, Class objectClass) {
 
         logger.info("message {} resolved. ", value);

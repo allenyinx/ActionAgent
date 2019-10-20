@@ -67,6 +67,8 @@ public class WebDriverStart {
 
     protected static final Logger logger = LoggerFactory.getLogger(WebDriverStart.class);
 
+    private static HtmlParser htmlParser = new HtmlParser();
+
     public static void main(String[] args) {
 
         browserEntry();
@@ -91,7 +93,7 @@ public class WebDriverStart {
         rootElement.setDepth(0);
         rootElement.setUrl(DriverConfig.ENTRY_PAGE);
         rootElement.setElementId(ElementType.link.name() + "_0");
-        rootElement.setType(ElementType.link.name());
+        rootElement.setType(ElementType.link);
 
         WebDriver webDriver = launchBrowser(chromeOptions);
 
@@ -231,8 +233,6 @@ public class WebDriverStart {
 
     private static void debugViewPeriod(WebDriver webDriver) {
 
-        analyzeLog(webDriver);
-
         try {
             Thread.sleep(BROWSER_LAST_PAGE_IDLE_SECOND * 1_000L);
         } catch (InterruptedException e) {
@@ -277,35 +277,7 @@ public class WebDriverStart {
         for (LogEntry error : jserrors) {
             record("JS error: " + error.getMessage());
 
-            String imageName = NavigateCount + "_" + System.currentTimeMillis();
-            if (DriverConfig.TAKE_SCREENSHOT_ON_FAILURE) {
-//                ScreenshotAction.actionBuilder().takeScreenshot(imageName, String.valueOf(PAGE_DEPTH), webDriver);
-            }
         }
-    }
-
-    public static void analyzeLog(WebDriver webDriver) {
-        LogEntries logEntries = webDriver.manage().logs().get(LogType.BROWSER);
-        for (LogEntry entry : logEntries) {
-            record("BROWSER LOG: " + new Date(entry.getTimestamp()) + " " + entry.getLevel() + " " + entry.getMessage());
-            //do something useful with the data
-        }
-    }
-
-    private static void tearDownBrowser(WebDriver webDriver) {
-
-        info("");
-        info("");
-        info("");
-        info(" ==================== total accessed: " + NavigateCount + " ===================");
-        dismissAlert(webDriver);
-        try {
-            webDriver.close();
-        } catch (WebDriverException e) {
-            logger.error(e.getMessage());
-            return;
-        }
-
     }
 
     private static List<String> createChromeArgs() {
@@ -356,17 +328,17 @@ public class WebDriverStart {
 
     private static List<String> parsePageContent(String content) {
 
-        return HtmlParser.parseChildLinks(content);
+        return htmlParser.parseChildLinks(content);
     }
 
     private static List<String> parseImagePageContent(String content) {
 
-        return HtmlParser.getImageLinks(content);
+        return htmlParser.getImageLinks(content);
     }
 
     private static List<String> parseFormPageContent(String content) {
 
-        return HtmlParser.getForms(content);
+        return htmlParser.getForms(content);
     }
 
     private static List<String> getHref(String str) {

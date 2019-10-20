@@ -2,5 +2,5 @@ package com.airta.action.agent.entity.html;
 
 public enum ElementType {
 
-    link, image, form
+    link, image, form, button, text
 }

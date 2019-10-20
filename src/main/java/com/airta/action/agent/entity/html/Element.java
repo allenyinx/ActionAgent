@@ -1,5 +1,6 @@
 package com.airta.action.agent.entity.html;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,17 +8,16 @@ import java.util.List;
  * Site map node element.
  * while contains depth, children, parent, status data.
  */
-public class Element {
+public class Element implements Serializable {
 
     private String elementId;
+    private String pathPath;
     private int depth = 0;
-    private String type;
+    private ElementType type;
     private boolean actionable = true;
     private String parentId;
     private int childrenCount = 0;
     private List<Element> children = new ArrayList<>();
-    private int updateCount = 0;
-    private int accessedCount = 0;
     private boolean isWorkingOn = false;
     private String url;
 
@@ -35,14 +35,6 @@ public class Element {
 
     public void setDepth(int depth) {
         this.depth = depth;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public boolean isActionable() {
@@ -81,22 +73,6 @@ public class Element {
         this.children = children;
     }
 
-    public int getUpdateCount() {
-        return updateCount;
-    }
-
-    public void setUpdateCount(int updateCount) {
-        this.updateCount = updateCount;
-    }
-
-    public int getAccessedCount() {
-        return accessedCount;
-    }
-
-    public void setAccessedCount(int accessedCount) {
-        this.accessedCount = accessedCount;
-    }
-
     public boolean isWorkingOn() {
         return isWorkingOn;
     }
@@ -111,5 +87,21 @@ public class Element {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public String getPathPath() {
+        return pathPath;
+    }
+
+    public void setPathPath(String pathPath) {
+        this.pathPath = pathPath;
+    }
+
+    public ElementType getType() {
+        return type;
+    }
+
+    public void setType(ElementType type) {
+        this.type = type;
     }
 }
