@@ -37,9 +37,9 @@ public abstract class AbstractDoAction implements IAction {
         logger.info("updating action report after execution.");
 
         Element pageElement = webDriverCapturer.readPageElementsRightNow(rawAction);
+        logger.info("Page Element info: {}", pageElement.toString());
 
         String childElementContents = jsonParser.objectToJSONString(pageElement);
-        logger.info("## Read children element list content: {}", childElementContents);
         ((ActionResultProducer)resultProducer).sendReportMessage(key, childElementContents);
     }
 

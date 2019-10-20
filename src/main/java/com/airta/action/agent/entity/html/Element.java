@@ -21,6 +21,19 @@ public class Element implements Serializable {
     private boolean isWorkingOn = false;
     private String url;
 
+    public String toString() {
+
+        return "\n[" + "\n" +
+                "   elementId: " + getElementId() + "\n" +
+                "   pathPath: " + getPathPath() + "\n" +
+                "   type: " + getType() + "\n" +
+                "   actionable: " + isActionable() + "\n" +
+                "   parentId: " + getParentId() + "\n" +
+                "   childrenCount: " + getChildrenCount() + "\n" +
+                "   url: " + getUrl() + "\n" +
+                "]\n";
+    }
+
     public String getElementId() {
         return elementId;
     }

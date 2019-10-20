@@ -43,6 +43,8 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         rootElement.setElementId(rawAction.getId());
         rootElement.setActionable(true);
         rootElement.setUrl(webDriver.getCurrentUrl());
+        rootElement.setType(ElementType.page);
+        rootElement.setWorkingOn(true);
 
         RawActionContext rawActionContext = rawAction.getContext();
         if(rawActionContext!=null) {
@@ -128,6 +130,7 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         linkElement.setType(elementType);
         linkElement.setParentId(parentElement.getElementId());
         linkElement.setElementId(parentElement.getElementId()+"_"+elementType+"_"+index);
+        linkElement.setWorkingOn(false);
         if(rawActionContext!=null) {
             linkElement.setPathPath(rawActionContext.getPagePath()+"_"+elementType.toString()+"_"+index);
         }
