@@ -52,14 +52,14 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         /**
          * read children elements.
          */
-        List<Element> childrenElementList = parserChildrenElements(rawActionContext);
+        List<Element> childrenElementList = parserChildrenElements(rawActionContext, rootElement);
         rootElement.setChildren(childrenElementList);
         rootElement.setChildrenCount(childrenElementList.size());
 
         return rootElement;
     }
 
-    private List<Element> parserChildrenElements(RawActionContext rawActionContext) {
+    private List<Element> parserChildrenElements(RawActionContext rawActionContext, Element rootElement) {
 
         List<Element> childrenList = new ArrayList<>();
 
@@ -68,9 +68,9 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         List<String> imageList = parseImagePageContent(rawContent);
         List<String> formList = parseFormPageContent(rawContent);
 
-        List<Element> linkElementList = buildLinkElementList(linkList, rawActionContext);
-        List<Element> imageElementList = buildImageElementList(imageList, rawActionContext);
-        List<Element> formElementList = buildFormElementList(formList, rawActionContext);
+        List<Element> linkElementList = buildLinkElementList(linkList, rawActionContext, rootElement);
+        List<Element> imageElementList = buildImageElementList(imageList, rawActionContext, rootElement);
+        List<Element> formElementList = buildFormElementList(formList, rawActionContext, rootElement);
 
         childrenList.addAll(linkElementList);
         childrenList.addAll(imageElementList);
@@ -79,11 +79,12 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         return childrenList;
     }
 
-    private List<Element> buildLinkElementList(List<String> linkURLList, RawActionContext rawActionContext) {
+    private List<Element> buildLinkElementList(List<String> linkURLList, RawActionContext rawActionContext, Element parentElement) {
 
         List<Element> urlElementList = new ArrayList<>();
-        for(String linkUrl: linkURLList) {
-            Element linkElement = buildLinkElement(linkUrl, rawActionContext);
+        for(int index=0; index< linkURLList.size(); index++) {
+            String linkUrl = linkURLList.get(index);
+            Element linkElement = buildLinkElement(linkUrl, rawActionContext, parentElement, index);
             if(linkElement!=null && linkElement.isActionable()) {
                 urlElementList.add(linkElement);
             }
@@ -92,11 +93,12 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         return urlElementList;
     }
 
-    private List<Element> buildImageElementList(List<String> imageURLList, RawActionContext rawActionContext) {
+    private List<Element> buildImageElementList(List<String> imageURLList, RawActionContext rawActionContext, Element parentElement) {
 
         List<Element> imageElementList = new ArrayList<>();
-        for(String linkUrl: imageURLList) {
-            Element linkElement = buildImageElement(linkUrl, rawActionContext);
+        for(int index=0; index< imageURLList.size(); index++) {
+            String linkUrl = imageURLList.get(index);
+            Element linkElement = buildImageElement(linkUrl, rawActionContext, parentElement, index);
             if(linkElement!=null && linkElement.isActionable()) {
                 imageElementList.add(linkElement);
             }
@@ -105,11 +107,12 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         return imageElementList;
     }
 
-    private List<Element> buildFormElementList(List<String> formList, RawActionContext rawActionContext) {
+    private List<Element> buildFormElementList(List<String> formList, RawActionContext rawActionContext, Element parentElement) {
 
         List<Element> formElementList = new ArrayList<>();
-        for(String form: formList) {
-            Element linkElement = buildFormElement(form, rawActionContext);
+        for(int index=0; index< formList.size(); index++) {
+            String linkUrl = formList.get(index);
+            Element linkElement = buildFormElement(linkUrl, rawActionContext, parentElement, index);
             if(linkElement!=null && linkElement.isActionable()) {
                 formElementList.add(linkElement);
             }
@@ -118,31 +121,33 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         return formElementList;
     }
 
-    private Element buildElement(String linkUrl, RawActionContext rawActionContext, ElementType elementType) {
+    private Element buildElement(String linkUrl, RawActionContext rawActionContext, ElementType elementType, Element parentElement, int index) {
 
         Element linkElement = new Element();
         linkElement.setUrl(linkUrl);
         linkElement.setType(elementType);
+        linkElement.setParentId(parentElement.getElementId());
+        linkElement.setElementId(parentElement.getElementId()+"_"+elementType+"_"+index);
         if(rawActionContext!=null) {
-            linkElement.setPathPath(rawActionContext.getPagePath()+"/"+elementType.toString());
+            linkElement.setPathPath(rawActionContext.getPagePath()+"_"+elementType.toString()+"_"+index);
         }
 
         return linkElement;
     }
 
-    private Element buildLinkElement(String linkUrl, RawActionContext rawActionContext) {
+    private Element buildLinkElement(String linkUrl, RawActionContext rawActionContext, Element parentElement, int index) {
 
-        return buildElement(linkUrl, rawActionContext, ElementType.link);
+        return buildElement(linkUrl, rawActionContext, ElementType.link, parentElement, index);
     }
 
-    private Element buildImageElement(String linkUrl, RawActionContext rawActionContext) {
+    private Element buildImageElement(String linkUrl, RawActionContext rawActionContext, Element parentElement, int index) {
 
-        return buildElement(linkUrl, rawActionContext, ElementType.image);
+        return buildElement(linkUrl, rawActionContext, ElementType.image, parentElement, index);
     }
 
-    private Element buildFormElement(String linkUrl, RawActionContext rawActionContext) {
+    private Element buildFormElement(String linkUrl, RawActionContext rawActionContext, Element parentElement, int index) {
 
-        return buildElement(linkUrl, rawActionContext, ElementType.form);
+        return buildElement(linkUrl, rawActionContext, ElementType.form, parentElement, index);
     }
 
     private String readCurrentPageSource() {
