@@ -2,6 +2,7 @@ package com.airta.action.agent.webdriver;
 
 import com.airta.action.agent.action.raw.fields.ElementLocation;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.springframework.util.StringUtils;
@@ -71,7 +72,12 @@ public class WebDriverLocator extends WebDriverWrapUp {
     }
 
     private WebElement findElementBy(By by) {
-        return webDriver.findElement(by);
+        try {
+            return webDriver.findElement(by);
+        } catch (NoSuchElementException e) {
+            logger.error(e.getLocalizedMessage());
+            return null;
+        }
     }
 
     private List<WebElement> findElementsBy(By by) {
