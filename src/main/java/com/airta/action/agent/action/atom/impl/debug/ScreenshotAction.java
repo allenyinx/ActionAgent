@@ -3,6 +3,7 @@ package com.airta.action.agent.action.atom.impl.debug;
 import com.airta.action.agent.action.atom.AbstractDebugAction;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.ElementLocation;
+import com.airta.action.agent.entity.output.DebugOutputType;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -31,7 +32,9 @@ public class ScreenshotAction extends AbstractDebugAction {
         }
         File destFile = new File(destinationFilePath);
 
-        //Copy file at destination
+        /**
+         * Copy file at destination
+         */
         try {
             logger.info("copy cached screenshot {} to share folder.", destinationFilePath);
             FileUtils.copyFile(scrShotScreenshotAs, destFile);
@@ -46,7 +49,7 @@ public class ScreenshotAction extends AbstractDebugAction {
             logger.warn("The record share folder not exist, maybe you need to manually create the directory.");
             return "";
         }
-        String finalPath = debugRecordFolder + "/" + rawAction.getId() + "/";
+        String finalPath = debugRecordFolder + File.separator + rawAction.getId() + File.separator;
         File finalPathFolder = new File(finalPath);
         if (!finalPathFolder.exists()) {
             finalPathFolder.mkdirs();
@@ -55,10 +58,10 @@ public class ScreenshotAction extends AbstractDebugAction {
             ElementLocation elementLocation = rawAction.getData().getElementPath();
             if (elementLocation != null && !StringUtils.isEmpty(elementLocation.getType())
                     && elementLocation.getType().equals("name") && !StringUtils.isEmpty(elementLocation.getValue())) {
-                finalPath += elementLocation.getValue() + ".png";
+                finalPath += elementLocation.getValue() + "." + DebugOutputType.png.name();
             }
         } else {
-            finalPath += rawAction.getId() + "_" + System.currentTimeMillis() + ".png";
+            finalPath += rawAction.getId() + "_" + System.currentTimeMillis() + "." + DebugOutputType.png.name();
         }
 
         return finalPath;
