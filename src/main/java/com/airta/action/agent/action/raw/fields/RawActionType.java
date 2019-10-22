@@ -28,6 +28,8 @@ public enum RawActionType {
     SCREENSHOT,
     @SerializedName("PRINTSOURCE")
     PRINTSOURCE,
+    @SerializedName("JSPRINTSOURCE")
+    JSPRINTSOURCE,
     @SerializedName("PRINTCHILDRENLINK")
     PRINTCHILDRENLINK,
     @SerializedName("REPORT")

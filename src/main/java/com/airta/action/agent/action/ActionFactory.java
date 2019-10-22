@@ -3,10 +3,7 @@ package com.airta.action.agent.action;
 import com.airta.action.agent.action.atom.impl.context.ClearAction;
 import com.airta.action.agent.action.atom.impl.context.GotoAction;
 import com.airta.action.agent.action.atom.impl.context.StartFromAction;
-import com.airta.action.agent.action.atom.impl.debug.JsConsoleLogAction;
-import com.airta.action.agent.action.atom.impl.debug.PrintAction;
-import com.airta.action.agent.action.atom.impl.debug.ScreenshotAction;
-import com.airta.action.agent.action.atom.impl.debug.UnknownAction;
+import com.airta.action.agent.action.atom.impl.debug.*;
 import com.airta.action.agent.action.atom.impl.simple.*;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.atom.IAction;
@@ -43,6 +40,8 @@ public class ActionFactory {
                 return new ScreenshotAction(webDriver);
             case PRINTSOURCE:
                 return new PrintAction(webDriver);
+            case JSPRINTSOURCE:
+                return new ExecJsPrintAction(webDriver);
             case JSLOGCAPTURE:
                 return new JsConsoleLogAction(webDriver);
             case GOTOPAGE:
