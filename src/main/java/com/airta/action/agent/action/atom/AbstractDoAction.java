@@ -1,6 +1,7 @@
 package com.airta.action.agent.action.atom;
 
 import com.airta.action.agent.action.raw.RawAction;
+import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.message.ResultProducer;
@@ -35,12 +36,16 @@ public abstract class AbstractDoAction implements IAction {
     public void report(String key, RawAction rawAction, ResultProducer resultProducer) {
 
         logger.info("updating action report after execution.");
+        RawActionContext rawActionContext = rawAction.getContext();
+        if(rawActionContext!=null && rawActionContext.isShouldFetchChildren()) {
+            Element pageElement = webDriverCapturer.readPageElementsRightNow(rawAction);
+            logger.info("Page Element info: {}", pageElement.toString());
 
-        Element pageElement = webDriverCapturer.readPageElementsRightNow(rawAction);
-        logger.info("Page Element info: {}", pageElement.toString());
-
-        String childElementContents = jsonParser.objectToJSONString(pageElement);
-        ((ActionResultProducer)resultProducer).sendReportMessage(key, childElementContents);
+            String childElementContents = jsonParser.objectToJSONString(pageElement);
+            ((ActionResultProducer)resultProducer).sendReportMessage(key, childElementContents);
+        } else {
+            logger.info("## skip fetch children context ..");
+        }
     }
 
     public void interval() {

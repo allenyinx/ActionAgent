@@ -2,6 +2,7 @@ package com.airta.action.agent.action;
 
 import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.action.raw.RawAction;
+import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;
@@ -39,8 +40,14 @@ public class ActionExecutor {
 
     private void runOrderedActions(String key, RawAction[] rawActions, WebDriver webDriver) {
 
-        for(RawAction rawAction: rawActions) {
+        for(int index=0;index<rawActions.length;index++) {
+            RawAction rawAction = rawActions[index];
             logger.info("## RawAction info: {}", rawAction);
+
+            rawAction.setId(String.valueOf(index));
+            if(index==rawActions.length-1) {
+                setFurtherFetchingContext(rawAction);
+            }
 
             IAction action = actionFactory.getActionInstance(rawAction, webDriver);
             action.exec(key, rawAction);
@@ -48,6 +55,11 @@ public class ActionExecutor {
         }
     }
 
+    /**
+     * resolve the raw action arrays from incoming raw message.
+     * @param rawData
+     * @return
+     */
     private RawAction[] resolveRawActionMessage(String rawData) {
 
         if (jsonParser.isJSONArray(rawData)) {
@@ -68,5 +80,18 @@ public class ActionExecutor {
             logger.error("Input rawData is not standard JSON FORMAT!");
         }
         return new RawAction[0];
+    }
+
+    /**
+     * enable the last rawAction to fetch children.
+     * @param rawAction
+     */
+    private void setFurtherFetchingContext(RawAction rawAction) {
+
+        RawActionContext rawActionContext = new RawActionContext();
+        if(rawAction.getContext()==null) {
+            rawAction.setContext(rawActionContext);
+        }
+        rawAction.getContext().setShouldFetchChildren(true);
     }
 }
