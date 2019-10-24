@@ -13,6 +13,8 @@ public class RawAction implements Serializable {
 
     private String id;
 
+    private String pathId;
+
     @JsonProperty("action")
     private RawActionType action;
 
@@ -62,5 +64,13 @@ public class RawAction implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPathId() {
+        return pathId;
+    }
+
+    public void setPathId(String pathId) {
+        this.pathId = pathId;
     }
 }

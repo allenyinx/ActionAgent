@@ -1,9 +1,11 @@
 package com.airta.action.agent.webdriver;
 
 import com.airta.action.agent.action.raw.RawAction;
+import com.airta.action.agent.action.raw.fields.ElementLocation;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
+import com.airta.action.agent.utility.WebDriverMagical;
 import com.airta.action.agent.utility.parser.HtmlParser;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
@@ -15,10 +17,13 @@ import java.util.List;
 
 public class WebDriverCapturer extends WebDriverWrapUp {
 
-    protected HtmlParser htmlParser = new HtmlParser();
+    protected HtmlParser htmlParser;
+    protected WebDriverMagical webDriverMagical;
 
     public WebDriverCapturer(WebDriver webDriver) {
         super(webDriver);
+        htmlParser = new HtmlParser();
+        webDriverMagical = new WebDriverMagical(webDriver);
     }
 
     public String displayJSErrosLog(WebDriver webDriver) {
@@ -40,7 +45,11 @@ public class WebDriverCapturer extends WebDriverWrapUp {
     public Element readPageElementsRightNow(RawAction rawAction) {
 
         Element rootElement = new Element();
-        rootElement.setElementId(rawAction.getId());
+        if(rawAction.getPathId()!=null) {
+            rootElement.setElementId(rawAction.getPathId());
+        } else {
+            rootElement.setElementId("root_"+rawAction.getId());
+        }
         rootElement.setActionable(true);
         rootElement.setUrl(webDriver.getCurrentUrl());
         rootElement.setType(ElementType.page);
@@ -125,17 +134,30 @@ public class WebDriverCapturer extends WebDriverWrapUp {
 
     private Element buildElement(String linkUrl, RawActionContext rawActionContext, ElementType elementType, Element parentElement, int index) {
 
-        Element linkElement = new Element();
-        linkElement.setUrl(linkUrl);
-        linkElement.setType(elementType);
-        linkElement.setParentId(parentElement.getElementId());
-        linkElement.setElementId(parentElement.getElementId()+"_"+elementType+"_"+index);
-        linkElement.setWorkingOn(false);
+        Element commonElement = new Element();
+        commonElement.setUrl(linkUrl);
+        commonElement.setType(elementType);
+        commonElement.setParentId(parentElement.getElementId());
+        commonElement.setElementId(parentElement.getElementId()+"_"+elementType+"_"+index);
+        commonElement.setWorkingOn(false);
         if(rawActionContext!=null) {
-            linkElement.setPathPath(rawActionContext.getPagePath()+"_"+elementType.toString()+"_"+index);
+            commonElement.setPathPath(rawActionContext.getPagePath()+"_"+elementType.toString()+"_"+index);
         }
 
-        return linkElement;
+        constructElementLocator(commonElement, elementType);
+
+        return commonElement;
+    }
+
+    /**
+     * properly assign locator for the element.
+     * @param element
+     * @param elementType
+     */
+    private void constructElementLocator(Element element, ElementType elementType) {
+
+        ElementLocation elementLocation = webDriverMagical.buildElementLocator(element, elementType);
+        element.setElementLocation(elementLocation);
     }
 
     private Element buildLinkElement(String linkUrl, RawActionContext rawActionContext, Element parentElement, int index) {

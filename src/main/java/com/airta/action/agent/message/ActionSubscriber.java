@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletContext;
 
 /**
+ * action Subscriber subscribe the raw action messages, which produced by action engine.
  * @author allenyin
  */
 @Component
