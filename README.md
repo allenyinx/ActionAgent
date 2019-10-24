@@ -4,6 +4,7 @@
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/allenyinx/ActionAgent.svg)](http://isitmaintained.com/project/allenyinx/ActionAgent "Average time to resolve an issue")
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=allenyinx_ActionAgent&metric=bugs)](https://sonarcloud.io/dashboard?id=allenyinx_ActionAgent)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=allenyinx_ActionAgent&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=allenyinx_ActionAgent)
+[![Image](https://images.microbadger.com/badges/image/airta/airgent.svg)](https://microbadger.com/images/airta/airgent)
 
 <p align="left">
     <a href="https://codecov.io/gh/allenyinx/ActionAgent"><img src="https://codecov.io/gh/allenyinx/ActionAgent/branch/develop/graph/badge.svg" /></a>
