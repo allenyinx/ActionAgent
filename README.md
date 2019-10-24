@@ -1,6 +1,6 @@
 # ActionAgent
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.springframework.boot/spring-boot-starter-parent/badge.svg)](https://search.maven.org/artifact/org.springframework.boot/spring-boot-starter-parent)
-[![Docker Hub](https://img.shields.io/docker/pulls/allenyinx/airgent.svg?style=flat)](https://cloud.docker.com/u/airta/repository/docker/airta/airgent/)
+[![Docker Hub](https://img.shields.io/docker/pulls/airta/airgent.svg?style=flat)](https://cloud.docker.com/u/airta/repository/docker/airta/airgent/)
 [![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/allenyinx/ActionAgent.svg)](http://isitmaintained.com/project/allenyinx/ActionAgent "Average time to resolve an issue")
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=allenyinx_ActionAgent&metric=bugs)](https://sonarcloud.io/dashboard?id=allenyinx_ActionAgent)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=allenyinx_ActionAgent&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=allenyinx_ActionAgent)
