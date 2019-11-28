@@ -15,11 +15,14 @@ import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -216,9 +219,20 @@ public class WebDriverStart {
 
     private static void sampleValidate(WebDriver webDriver) {
 
+        waitForPageLoad(webDriver);
+
         String actualTitle = webDriver.getTitle();
         info("Actual Title: " + actualTitle);
 
+        String rawPageSource = webDriver.getPageSource();
+        info(rawPageSource);
+
+        List<WebElement> formElementList = webDriver.findElements(By.xpath("//form"));
+        for(WebElement webElement: formElementList) {
+            String innerHtmlElement = webElement.getAttribute("innerHTML");
+            info(innerHtmlElement);
+        }
+        parseFormPageContent(rawPageSource);
         /*
          * compare the actual title of the page with the expected one and print
          * the result as "Passed" or "Failed"
@@ -229,6 +243,20 @@ public class WebDriverStart {
             info("Test Failed");
         }
         blockSeperator();
+    }
+
+    public static void waitForPageLoad(WebDriver webDriver) {
+
+        Wait<WebDriver> wait = new WebDriverWait(webDriver, 30);
+        wait.until(new Function<WebDriver, Boolean>() {
+            public Boolean apply(WebDriver driver) {
+                System.out.println("Current Window State       : "
+                        + String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState")));
+                return String
+                        .valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState"))
+                        .equals("complete");
+            }
+        });
     }
 
     private static void debugViewPeriod(WebDriver webDriver) {
