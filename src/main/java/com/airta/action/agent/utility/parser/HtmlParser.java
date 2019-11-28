@@ -1,6 +1,11 @@
 package com.airta.action.agent.utility.parser;
 
+import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.entity.feature.FormElement;
+import com.airta.action.agent.entity.feature.ImageElement;
+import com.airta.action.agent.entity.feature.LinkElement;
+import com.airta.action.agent.entity.html.ElementType;
 import com.airta.action.agent.handler.URLAction;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -8,7 +13,9 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class HtmlParser {
@@ -16,6 +23,56 @@ public class HtmlParser {
     private static final Logger logger = LoggerFactory.getLogger(HtmlParser.class);
 
     private Document doc = null;
+
+    private Elements pickupSpecifiedRawElements(String cssQueryStr, String pageContent) {
+
+        try {
+            doc = Jsoup.parse(pageContent);
+        } catch (Exception e) {
+            logger.error(e.getLocalizedMessage());
+            return null;
+        }
+        Elements aLinks = doc.select(cssQueryStr);
+        return aLinks;
+    }
+
+    public List<com.airta.action.agent.entity.html.Element> parseChildLinkElements(String pageContent, RawActionContext rawActionContext, com.airta.action.agent.entity.html.Element parentElement) {
+        List<com.airta.action.agent.entity.html.Element> urlElementList = new ArrayList<>();
+
+        Elements rawElements = pickupSpecifiedRawElements("a[href]", pageContent);
+        if (rawElements == null) {
+            return Collections.emptyList();
+        } else {
+            for (int index = 0; index < rawElements.size(); index++) {
+                Element rawElement = rawElements.get(index);
+                String elementUrlStr = rawElement.attr("href");
+                if (!elementUrlStr.contains("http://") && !elementUrlStr.contains("https://")) {
+                    if (elementUrlStr.startsWith("/")) {
+                        elementUrlStr = elementUrlStr.substring(1);
+                    }
+                    elementUrlStr = DriverConfig.ENTRY_PAGE + elementUrlStr;
+                }
+
+                LinkElement featureElement = new LinkElement();
+                featureElement.setUrl(elementUrlStr);
+                if (rawElement.hasAttr("id")) {
+                    featureElement.setId(rawElement.attr("id"));
+                } else {
+                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.link.toString() + "_" + index);
+                }
+                featureElement.setClassName(rawElement.attr("class"));
+                if (rawElement.hasAttr("onclick")) {
+                    featureElement.setOnClick(rawElement.attr("onclick"));
+                }
+
+                attributeCommonElement(featureElement, ElementType.link, rawActionContext, parentElement, index);
+
+                urlElementList.add(featureElement);
+            }
+        }
+
+        return urlElementList;
+    }
 
     /**
      * @param pageContent target URL
@@ -42,9 +99,6 @@ public class HtmlParser {
                 }
                 url = DriverConfig.ENTRY_PAGE + url;
             }
-//            if (DuplicateAction.actionBuilder().isDuplicateURL(url)) {
-//                continue;
-//            }
 
             if (!URLAction.actionBuilder().isURLSchemaValid(url)) {
                 System.out.println("## Invalid URL: " + url);
@@ -56,6 +110,54 @@ public class HtmlParser {
         }
 
         return urlList;
+    }
+
+    public List<com.airta.action.agent.entity.html.Element> parseChildImageElements(String pageContent, RawActionContext rawActionContext,
+                                                                                    com.airta.action.agent.entity.html.Element parentElement) {
+        List<com.airta.action.agent.entity.html.Element> urlElementList = new ArrayList<>();
+
+        Elements rawElements = pickupSpecifiedRawElements("img[src]", pageContent);
+        if (rawElements == null) {
+            return Collections.emptyList();
+        } else {
+            for (int index = 0; index < rawElements.size(); index++) {
+                Element rawElement = rawElements.get(index);
+                String elementUrlStr = rawElement.attr("src");
+                if (!elementUrlStr.contains("http://") && !elementUrlStr.contains("https://")) {
+                    if (elementUrlStr.startsWith("/")) {
+                        elementUrlStr = elementUrlStr.substring(1);
+                    }
+                    elementUrlStr = parentElement.getUrl() + "/" + elementUrlStr;
+                }
+
+                ImageElement featureElement = new ImageElement();
+                featureElement.setUrl(elementUrlStr);
+                if (rawElement.hasAttr("id")) {
+                    featureElement.setId(rawElement.attr("id"));
+                } else {
+                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.image.toString() + "_" + index);
+                }
+                featureElement.setClassName(rawElement.attr("class"));
+                attributeCommonElement(featureElement, ElementType.image, rawActionContext, parentElement, index);
+
+                urlElementList.add(featureElement);
+            }
+        }
+
+        return urlElementList;
+    }
+
+    private com.airta.action.agent.entity.html.Element attributeCommonElement(com.airta.action.agent.entity.html.Element featureElement, ElementType elementType,
+                                                                              RawActionContext rawActionContext, com.airta.action.agent.entity.html.Element parentElement, int index) {
+
+        featureElement.setType(ElementType.image);
+        featureElement.setParentId(parentElement.getElementId());
+        featureElement.setElementId(parentElement.getParentId() + "_" + featureElement.getId() + "_" + index);
+        featureElement.setWorkingOn(false);
+        if (rawActionContext != null) {
+            featureElement.setPathPath(rawActionContext.getPagePath() + "_" + ElementType.image.toString() + "_" + index);
+        }
+        return featureElement;
     }
 
     public List<String> getImageLinks(String pageContent) {
@@ -82,6 +184,39 @@ public class HtmlParser {
         return imageUrlList;
     }
 
+    public List<com.airta.action.agent.entity.html.Element> parseChildFormElements(String pageContent, RawActionContext rawActionContext,
+                                                                                    com.airta.action.agent.entity.html.Element parentElement) {
+        List<com.airta.action.agent.entity.html.Element> formElementList = new ArrayList<>();
+
+        Elements rawElements = pickupSpecifiedRawElements("form[id]", pageContent);
+        if (rawElements == null) {
+            return Collections.emptyList();
+        } else {
+            for (int index = 0; index < rawElements.size(); index++) {
+                Element rawElement = rawElements.get(index);
+
+                FormElement featureElement = new FormElement();
+                if (rawElement.hasAttr("id")) {
+                    featureElement.setId(rawElement.attr("id"));
+                } else {
+                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.form.toString() + "_" + index);
+                }
+                featureElement.setClassName(rawElement.attr("class"));
+                if (rawElement.hasAttr("action")) {
+                    featureElement.setAction(rawElement.attr("action"));
+                }
+                if (rawElement.hasAttr("onsubmit")) {
+                    featureElement.setOnSubmit(rawElement.attr("onsubmit"));
+                }
+                attributeCommonElement(featureElement, ElementType.form, rawActionContext, parentElement, index);
+
+                formElementList.add(featureElement);
+            }
+        }
+
+        return formElementList;
+    }
+
     public List<String> getForms(String pageContent) {
         List<String> formList = new ArrayList<>();
 
@@ -92,7 +227,7 @@ public class HtmlParser {
             logger.error(e.getLocalizedMessage());
             return formList;
         }
-        Elements imgLinks = doc.select("form[method]");
+        Elements imgLinks = doc.select("form[id]");
         for (Element element : imgLinks) {
             String formAction = element.attr("action");
             String formId = element.attr("id");

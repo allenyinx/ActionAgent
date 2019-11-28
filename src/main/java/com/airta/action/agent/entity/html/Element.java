@@ -12,6 +12,8 @@ import java.util.List;
  */
 public class Element implements Serializable {
 
+    private String id;
+    private String className;
     private String elementId;
     private String pathPath;
     private int depth = 0;
@@ -127,5 +129,21 @@ public class Element implements Serializable {
 
     public void setElementLocation(ElementLocation elementLocation) {
         this.elementLocation = elementLocation;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
     }
 }
