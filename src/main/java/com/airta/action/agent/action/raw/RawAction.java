@@ -13,6 +13,11 @@ public class RawAction implements Serializable {
 
     private String id;
 
+    /**
+     * pathId is used to match the node when updating the sitemap.
+     * we assume that when invoke one of the node from the sitemap, when know the pathId
+     * from its locator or context.
+     */
     private String pathId;
 
     @JsonProperty("action")

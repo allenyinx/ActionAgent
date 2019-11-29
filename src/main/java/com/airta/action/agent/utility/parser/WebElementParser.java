@@ -42,9 +42,13 @@ public class WebElementParser {
     private Element attributeCommonElement(Element featureElement, ElementType elementType,
                                            String locatorPrefix, RawActionContext rawActionContext, Element parentElement, int index) {
 
+        String idContent = featureElement.getId();
+        if(idContent==null || idContent.equals("")) {
+            idContent = elementType.toString();
+        }
         featureElement.setType(elementType);
         featureElement.setParentId(parentElement.getElementId());
-        featureElement.setElementId(featureElement.getId() + "_" + index);
+        featureElement.setElementId(idContent + "_" + index);
         featureElement.setWorkingOn(false);
         if (rawActionContext != null) {
             if (featureElement.getId() != null && !featureElement.getId().equals("")) {
