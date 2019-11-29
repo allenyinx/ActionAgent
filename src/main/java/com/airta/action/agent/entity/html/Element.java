@@ -24,7 +24,6 @@ public class Element implements Serializable {
     private List<Element> children = new ArrayList<>();
     private boolean isWorkingOn = false;
     private String url;
-    private ElementLocation elementLocation;
 
     public String toString() {
 
@@ -121,14 +120,6 @@ public class Element implements Serializable {
 
     public void setType(ElementType type) {
         this.type = type;
-    }
-
-    public ElementLocation getElementLocation() {
-        return elementLocation;
-    }
-
-    public void setElementLocation(ElementLocation elementLocation) {
-        this.elementLocation = elementLocation;
     }
 
     public String getId() {

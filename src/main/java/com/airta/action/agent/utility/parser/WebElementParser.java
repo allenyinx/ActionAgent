@@ -45,7 +45,7 @@ public class WebElementParser {
         featureElement.setElementId(parentElement.getParentId() + "_" + featureElement.getId() + "_" + index);
         featureElement.setWorkingOn(false);
         if (rawActionContext != null) {
-            if (featureElement.getId() != null && featureElement.getId().equals("")) {
+            if (featureElement.getId() != null && !featureElement.getId().equals("")) {
                 featureElement.setPathPath(locatorPrefix + "[@id='" + featureElement.getId() + "']");
             } else {
                 featureElement.setPathPath(locatorPrefix + "[" + index + "]");

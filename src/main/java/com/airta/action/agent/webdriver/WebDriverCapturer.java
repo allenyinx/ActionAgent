@@ -1,12 +1,10 @@
 package com.airta.action.agent.webdriver;
 
 import com.airta.action.agent.action.raw.RawAction;
-import com.airta.action.agent.action.raw.fields.ElementLocation;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
 import com.airta.action.agent.entity.html.PageElementPath;
-import com.airta.action.agent.utility.WebDriverMagical;
 import com.airta.action.agent.utility.parser.HtmlParser;
 import com.airta.action.agent.utility.parser.WebElementParser;
 import org.openqa.selenium.WebDriver;
@@ -22,7 +20,6 @@ public class WebDriverCapturer extends WebDriverWrapUp {
 
     protected HtmlParser htmlParser;
     protected WebElementParser webElementParser;
-    protected WebDriverMagical webDriverMagical;
     protected PageElementPath pageElementPath;
 
     public WebDriverCapturer(WebDriver webDriver) {
@@ -30,7 +27,6 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         htmlParser = new HtmlParser();
         webElementParser = new WebElementParser();
         pageElementPath = new PageElementPath();
-        webDriverMagical = new WebDriverMagical(webDriver);
     }
 
     public String displayJSErrosLog(WebDriver webDriver) {
@@ -87,9 +83,9 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         String rawContent = readCurrentPageSource();
 
         List<Element> linkElementList = buildLinkElementList(rawContent, rawActionContext, rootElement);
-        logger.info("## fetch link children: ["+linkElementList.size()+"] ..");
+        logger.info("## fetch link children: [" + linkElementList.size() + "] ..");
         List<Element> formElementList = buildFormElementList(rawContent, rawActionContext, rootElement);
-        logger.info("## fetch form children: ["+formElementList.size()+"] ..");
+        logger.info("## fetch form children: [" + formElementList.size() + "] ..");
 
         childrenList.addAll(linkElementList);
         childrenList.addAll(formElementList);
@@ -100,27 +96,15 @@ public class WebDriverCapturer extends WebDriverWrapUp {
     private List<Element> buildLinkElementList(String content, RawActionContext rawActionContext, Element parentElement) {
 
         List<WebElement> linkElements = webDriver.findElements(pageElementPath.linkPathSyntax());
-        return webElementParser.parseChildElements(linkElements, ElementType.link, "//a" ,rawActionContext, parentElement);
+        return webElementParser.parseChildElements(linkElements, ElementType.link, "//a", rawActionContext, parentElement);
 //        return htmlParser.parseChildLinkElements(content, rawActionContext, parentElement);
     }
 
     private List<Element> buildFormElementList(String content, RawActionContext rawActionContext, Element parentElement) {
 
         List<WebElement> formElements = webDriver.findElements(pageElementPath.formPathSyntax());
-        return webElementParser.parseChildElements(formElements, ElementType.form, "//form" ,rawActionContext, parentElement);
+        return webElementParser.parseChildElements(formElements, ElementType.form, "//form", rawActionContext, parentElement);
 //        return htmlParser.parseChildFormElements(content, rawActionContext, parentElement);
-    }
-
-    /**
-     * properly assign locator for the element.
-     *
-     * @param element
-     * @param elementType
-     */
-    private void constructElementLocator(Element element, ElementType elementType) {
-
-        ElementLocation elementLocation = webDriverMagical.buildElementLocator(element, elementType);
-        element.setElementLocation(elementLocation);
     }
 
     private String readCurrentPageSource() {
