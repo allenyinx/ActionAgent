@@ -27,6 +27,7 @@ public class WebElementParser {
                 WebElement webElement = webElementList.get(index);
                 Element element = new Element();
                 element.setId(webElement.getAttribute("id"));
+                element.setClassName(webElement.getAttribute("class"));
 
                 attributeCommonElement(element, elementType, locatorPrefix, rawActionContext, parentElement, index);
 
