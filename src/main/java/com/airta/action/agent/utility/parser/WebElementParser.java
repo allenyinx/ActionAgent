@@ -26,7 +26,7 @@ public class WebElementParser {
 
                 WebElement webElement = webElementList.get(index);
                 Element element = new Element();
-                element.setId(webElement.getAttribute("id"));
+                element.setId(webElement.getAttribute("id")==null?elementType.name():webElement.getAttribute("id"));
                 String elementClassName = webElement.getAttribute("class");
                 element.setClassName(elementClassName==null?"undefined":elementClassName);
 
@@ -44,7 +44,7 @@ public class WebElementParser {
 
         featureElement.setType(elementType);
         featureElement.setParentId(parentElement.getElementId());
-        featureElement.setElementId(parentElement.getElementId() + "_" + featureElement.getId() + "_" + index);
+        featureElement.setElementId(featureElement.getId() + "_" + index);
         featureElement.setWorkingOn(false);
         if (rawActionContext != null) {
             if (featureElement.getId() != null && !featureElement.getId().equals("")) {

@@ -51,9 +51,14 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         if (rawAction.getPathId() != null) {
             rootElement.setElementId(rawAction.getPathId());
         } else {
+
             rootElement.setId("root_0");
             rootElement.setClassName("page");
             rootElement.setElementId("root_" + rawAction.getId());
+
+//            rootElement.setId(rawAction.getData().getElementPath().getValue());
+//            rootElement.setClassName("page");
+//            rootElement.setElementId(rawAction.getData().getElementPath().getValue());
         }
         rootElement.setActionable(true);
         rootElement.setUrl(webDriver.getCurrentUrl());
