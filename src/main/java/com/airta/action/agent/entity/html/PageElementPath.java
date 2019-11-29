@@ -9,7 +9,7 @@ public class PageElementPath {
         return By.xpath("//form");
     }
 
-    public By buttonPathSyntax() {
+    public By linkPathSyntax() {
 
         return By.xpath("//a");
     }
