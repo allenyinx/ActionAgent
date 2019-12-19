@@ -13,6 +13,9 @@ import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * @author allenyin
+ */
 public abstract class AbstractDoAction implements IAction {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -33,6 +36,7 @@ public abstract class AbstractDoAction implements IAction {
         jsonParser = new JsonParser();
     }
 
+    @Override
     public void report(String key, RawAction rawAction, ResultProducer resultProducer) {
 
         logger.info("updating action report after execution.");
@@ -48,6 +52,7 @@ public abstract class AbstractDoAction implements IAction {
         }
     }
 
+    @Override
     public void interval() {
         webDriverOperater.actionHalt();
     }

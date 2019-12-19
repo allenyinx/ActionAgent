@@ -58,7 +58,7 @@ public class HtmlParser {
                 if (rawElement.hasAttr("id")) {
                     featureElement.setId(rawElement.attr("id"));
                 } else {
-                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.link.toString() + "_" + index);
+                    featureElement.setId(rawActionContext==null?"No_Page_Path":rawActionContext.getPagePath() + "_" + ElementType.link.toString() + "_" + index);
                 }
                 featureElement.setClassName(rawElement.attr("class"));
                 if (rawElement.hasAttr("onclick")) {
@@ -135,7 +135,7 @@ public class HtmlParser {
                 if (rawElement.hasAttr("id")) {
                     featureElement.setId(rawElement.attr("id"));
                 } else {
-                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.image.toString() + "_" + index);
+                    featureElement.setId(rawActionContext==null?"No_Page_Path":rawActionContext.getPagePath() + "_" + ElementType.image.toString() + "_" + index);
                 }
                 featureElement.setClassName(rawElement.attr("class"));
                 attributeCommonElement(featureElement, ElementType.image, rawActionContext, parentElement, index);
@@ -199,7 +199,7 @@ public class HtmlParser {
                 if (rawElement.hasAttr("id")) {
                     featureElement.setId(rawElement.attr("id"));
                 } else {
-                    featureElement.setId(rawActionContext.getPagePath() + "_" + ElementType.form.toString() + "_" + index);
+                    featureElement.setId(rawActionContext==null?"No_Page_Path":rawActionContext.getPagePath() + "_" + ElementType.form.toString() + "_" + index);
                 }
                 featureElement.setClassName(rawElement.attr("class"));
                 if (rawElement.hasAttr("action")) {

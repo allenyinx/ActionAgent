@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * @author allenyin
+ */
 public class WebElementParser {
 
     private static final Logger logger = LoggerFactory.getLogger(WebElementParser.class);

@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+/**
+ * @author allenyin
+ */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class RawAction implements Serializable {
 
@@ -29,6 +32,7 @@ public class RawAction implements Serializable {
     @JsonProperty("context")
     private RawActionContext context;
 
+    @Override
     public String toString() {
 
         return "\n[" + "\n" +
