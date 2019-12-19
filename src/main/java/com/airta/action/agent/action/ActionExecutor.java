@@ -13,20 +13,25 @@ import org.springframework.stereotype.Component;
 
 /**
  * common entry for Action message handle.
+ * @author allenyin
  */
 @Component
 public class ActionExecutor {
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Autowired
-    private JsonParser jsonParser;
+    private final JsonParser jsonParser;
+
+    private final ActionFactory actionFactory;
+
+    private final ActionResultProducer actionResultProducer;
 
     @Autowired
-    private ActionFactory actionFactory;
-
-    @Autowired
-    private ActionResultProducer actionResultProducer;
+    public ActionExecutor(JsonParser jsonParser, ActionFactory actionFactory, ActionResultProducer actionResultProducer) {
+        this.jsonParser = jsonParser;
+        this.actionFactory = actionFactory;
+        this.actionResultProducer = actionResultProducer;
+    }
 
     public void run(String key, String value, WebDriver webDriver) {
 

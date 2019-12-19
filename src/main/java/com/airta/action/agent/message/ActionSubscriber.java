@@ -16,25 +16,30 @@ import javax.servlet.ServletContext;
 
 /**
  * action Subscriber subscribe the raw action messages, which produced by action engine.
+ *
  * @author allenyin
  */
 @Component
 public class ActionSubscriber {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
-    ServletContext servletContext;
+    private final ServletContext servletContext;
 
-    @Autowired
-    private ActionExecutor actionExecutor;
+    private final ActionExecutor actionExecutor;
 
-    @Autowired
-    private InputInvalidHandler inputInvalidHandler;
+    private final InputInvalidHandler inputInvalidHandler;
 
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    public ActionSubscriber(ServletContext servletContext, ActionExecutor actionExecutor, InputInvalidHandler inputInvalidHandler) {
+        this.servletContext = servletContext;
+        this.actionExecutor = actionExecutor;
+        this.inputInvalidHandler = inputInvalidHandler;
+    }
 
     @KafkaListener(topics = {"action"})
     public void listen(ConsumerRecord<?, ?> record) {
