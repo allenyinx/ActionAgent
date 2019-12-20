@@ -43,7 +43,7 @@ public class ActionExecutor {
         }
     }
 
-    private void runOrderedActions(String key, RawAction[] rawActions, WebDriver webDriver) {
+    public void runOrderedActions(String key, RawAction[] rawActions, WebDriver webDriver) {
 
         for(int index=0;index<rawActions.length;index++) {
             RawAction rawAction = rawActions[index];
@@ -85,6 +85,12 @@ public class ActionExecutor {
             logger.error("Input rawData is not standard JSON FORMAT!");
         }
         return new RawAction[0];
+    }
+
+    public boolean runToPage(String pagePath) {
+
+        logger.info("## trying run to expected page ..");
+        return true;
     }
 
     /**
