@@ -3,6 +3,7 @@ package com.airta.action.agent.action;
 import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
+import com.airta.action.agent.entity.DriverConfig;
 import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.servlet.ServletContext;
 
 /**
  * common entry for Action message handle.
@@ -26,11 +29,14 @@ public class ActionExecutor {
 
     private final ActionResultProducer actionResultProducer;
 
+    private final ServletContext servletContext;
+
     @Autowired
-    public ActionExecutor(JsonParser jsonParser, ActionFactory actionFactory, ActionResultProducer actionResultProducer) {
+    public ActionExecutor(JsonParser jsonParser, ActionFactory actionFactory, ActionResultProducer actionResultProducer, ServletContext servletContext) {
         this.jsonParser = jsonParser;
         this.actionFactory = actionFactory;
         this.actionResultProducer = actionResultProducer;
+        this.servletContext = servletContext;
     }
 
     public void run(String key, String value, WebDriver webDriver) {
@@ -57,6 +63,8 @@ public class ActionExecutor {
             IAction action = actionFactory.getActionInstance(rawAction, webDriver);
             action.exec(key, rawAction);
             action.report(key, rawAction, actionResultProducer);
+
+            servletContext.setAttribute(DriverConfig.WebDriverPagePathID, String.valueOf(index));
         }
     }
 

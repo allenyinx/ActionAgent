@@ -24,9 +24,11 @@ public abstract class AbstractDebugAction implements IAction {
         webDriverCapturer = new WebDriverCapturer(this.webDriver);
     }
 
+    @Override
     public void report(String key, RawAction rawAction, ResultProducer resultProducer) {
 
     }
 
+    @Override
     public void interval() {}
 }

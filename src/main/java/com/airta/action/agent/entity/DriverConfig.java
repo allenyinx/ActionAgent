@@ -30,5 +30,6 @@ public final class DriverConfig {
 
     public static final String WebDriverSessionKey = "webDriverSession";
     public static final String WebDriverSessionStatus = "webDriverSessionStatus";
+    public static final String WebDriverPagePathID = "webDriverPagePathID";
 
 }

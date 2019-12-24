@@ -5,6 +5,7 @@ import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.AgentState;
 import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.webdriver.WebDriverCapturer;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -15,8 +16,11 @@ import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletContext;
 
+/**
+ * @author allenyin
+ */
 @Component
-public class RESTActionRequest {
+public class RestActionRequest {
 
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     @Autowired
@@ -30,6 +34,8 @@ public class RESTActionRequest {
 
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
+
+    private WebDriverCapturer webDriverCapturer = null;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -65,11 +71,14 @@ public class RESTActionRequest {
         WebDriver webDriver = restoreWebDriverSession();
 
         if (webDriver != null) {
+            webDriverCapturer = new WebDriverCapturer(webDriver);
+
             agentState.setCurrentUrl(webDriver.getCurrentUrl());
             agentState.setCurrentTitle(webDriver.getTitle());
-            agentState.setPageSource(webDriver.getPageSource());
+            agentState.setCurrentPagePathID(readCurrentServletContext());
+            agentState.setPageSource(webDriverCapturer.readCurrentPageSource());
             agentState.setScreenshot("");
-            agentState.setJslog("");
+            agentState.setJsLog(webDriverCapturer.displayJSErrosLog());
             agentState.setState("active");
         } else {
             agentState.setState("inactive");
@@ -86,6 +95,16 @@ public class RESTActionRequest {
             return null;
         } else {
             return (WebDriver) storedSessionObject;
+        }
+    }
+
+    private String readCurrentServletContext() {
+
+        Object pathIdObj = servletContext.getAttribute(DriverConfig.WebDriverPagePathID);
+        if (pathIdObj != null) {
+            return String.valueOf(pathIdObj);
+        } else {
+            return "";
         }
     }
 }

@@ -29,7 +29,7 @@ public class WebDriverCapturer extends WebDriverWrapUp {
         pageElementPath = new PageElementPath();
     }
 
-    public String displayJSErrosLog(WebDriver webDriver) {
+    public String displayJSErrosLog() {
         LogEntries jserrors;
         String jsErrorLogContent = "JS error: [\n";
         try {
@@ -111,7 +111,7 @@ public class WebDriverCapturer extends WebDriverWrapUp {
 //        return htmlParser.parseChildFormElements(content, rawActionContext, parentElement);
     }
 
-    private String readCurrentPageSource() {
+    public String readCurrentPageSource() {
 
         String pageSource = webDriver.getPageSource();
 

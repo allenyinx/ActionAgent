@@ -13,6 +13,9 @@ import org.springframework.util.StringUtils;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * @author allenyin
+ */
 public class ScreenshotAction extends AbstractDebugAction {
 
     public ScreenshotAction(WebDriver webDriver) {

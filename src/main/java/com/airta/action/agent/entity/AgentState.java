@@ -3,6 +3,7 @@ package com.airta.action.agent.entity;
 import java.io.Serializable;
 
 /**
+ * agent's status entity.
  * @author allenyin
  */
 public class AgentState implements Serializable {
@@ -10,9 +11,10 @@ public class AgentState implements Serializable {
     private String currentUrl;
     private String currentTitle;
     private String state;
+    private String currentPagePathID;
     private String pageSource;
     private String screenshot;
-    private String jslog;
+    private String jsLog;
 
     public String getCurrentUrl() {
         return currentUrl;
@@ -54,11 +56,19 @@ public class AgentState implements Serializable {
         this.screenshot = screenshot;
     }
 
-    public String getJslog() {
-        return jslog;
+    public String getJsLog() {
+        return jsLog;
     }
 
-    public void setJslog(String jslog) {
-        this.jslog = jslog;
+    public void setJsLog(String jsLog) {
+        this.jsLog = jsLog;
+    }
+
+    public String getCurrentPagePathID() {
+        return currentPagePathID;
+    }
+
+    public void setCurrentPagePathID(String currentPagePathID) {
+        this.currentPagePathID = currentPagePathID;
     }
 }

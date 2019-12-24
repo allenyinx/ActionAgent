@@ -3,7 +3,7 @@ package com.airta.action.agent.controller;
 
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.config.CommonConfig;
-import com.airta.action.agent.handler.RESTActionRequest;
+import com.airta.action.agent.handler.RestActionRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,11 @@ public class AgentDefaultController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
-    private RESTActionRequest restActionRequest;
+    private RestActionRequest restActionRequest;
 
     @GetMapping(value = "/alive")
     public HttpStatus checkMessageStatus() {
+
         try {
             String message = "test for flow message";
             return HttpStatus.OK;
@@ -37,16 +38,17 @@ public class AgentDefaultController {
         return HttpStatus.BAD_REQUEST;
     }
 
-    @GetMapping(value = "/agentState")
+    @GetMapping(value = "/agentState", produces = {"application/json"})
     public Object queryAgentState() {
-
         logger.info("## querying state of current agent ..");
+
         return restActionRequest.queryAgentState();
     }
 
     @PostMapping(value = "/recoverContext", produces = "application/json")
     @ResponseBody
     public Object recoverAgentContent(RawAction action) {
+
         String pagePath = action.getContext().getPagePath();
         logger.info("## expect to recover to page: {}", pagePath);
         restActionRequest.recoverAgentContext(action);
@@ -56,9 +58,14 @@ public class AgentDefaultController {
     @PostMapping(value = "/rawAction", produces = "application/json")
     @ResponseBody
     public Object rawActionInAgent(RawAction action) {
-        logger.info("## action {} on current agent ..", action.getAction().name());
-        boolean actionExecuted = restActionRequest.runRawActionOnAgent(action);
-        return actionExecuted;
+
+        if (action != null && action.getAction() != null) {
+
+            logger.info("## action {} on current agent ..", action.getAction().name());
+            boolean actionExecuted = restActionRequest.runRawActionOnAgent(action);
+            return actionExecuted;
+        }
+        return HttpStatus.BAD_REQUEST;
     }
 
     @GetMapping(value = "/version")
