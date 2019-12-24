@@ -4,7 +4,7 @@ import org.openqa.selenium.PageLoadStrategy;
 
 public final class DriverConfig {
 
-    public static final String ENTRY_PAGE = "http://www.bing.com";
+    public static final String ENTRY_PAGE = "http://www.hellochat.com";
     public static final int CHILDPAGE_DEPTH = 2;
     public static final int MAX_PAGE_COUNT = 200;
 

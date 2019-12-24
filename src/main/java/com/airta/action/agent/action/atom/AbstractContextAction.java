@@ -21,9 +21,11 @@ public abstract class AbstractContextAction implements IAction {
         webDriverLocator = new WebDriverLocator(this.webDriver);
     }
 
+    @Override
     public void report(String key, RawAction rawAction, ResultProducer resultProducer) {
     }
 
+    @Override
     public void interval() {
     }
 }

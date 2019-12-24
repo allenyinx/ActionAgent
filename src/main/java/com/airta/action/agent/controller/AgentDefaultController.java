@@ -55,6 +55,18 @@ public class AgentDefaultController {
         return 200;
     }
 
+    @PostMapping(value = "/initBrowser")
+    @ResponseBody
+    public Object initBrowserStart(String startUrl) {
+
+        logger.info("## init browser url to : {}", startUrl);
+        if (restActionRequest.initBrowserStartPage(startUrl)) {
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.GONE;
+        }
+    }
+
     @PostMapping(value = "/rawAction", produces = "application/json")
     @ResponseBody
     public Object rawActionInAgent(RawAction action) {
@@ -66,6 +78,18 @@ public class AgentDefaultController {
             return actionExecuted;
         }
         return HttpStatus.BAD_REQUEST;
+    }
+
+    @PostMapping(value = "/immediateChildren", produces = "application/json")
+    @ResponseBody
+    public Object fetchImmediateChilds(RawAction action) {
+
+        if (action != null && action.getAction() != null) {
+
+            logger.info("## action {} on current agent ..", action.getAction().name());
+            return restActionRequest.fetchImmediateChildPages(action);
+        }
+        return null;
     }
 
     @GetMapping(value = "/version")

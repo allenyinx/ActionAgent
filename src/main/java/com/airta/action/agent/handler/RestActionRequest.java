@@ -5,7 +5,11 @@ import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
 import com.airta.action.agent.entity.AgentState;
 import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.entity.html.Element;
+import com.airta.action.agent.utility.WebDriverStart;
+import com.airta.action.agent.utility.parser.JsonParser;
 import com.airta.action.agent.webdriver.WebDriverCapturer;
+import com.airta.action.agent.webdriver.WebDriverState;
 import io.micrometer.core.instrument.util.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -32,12 +36,34 @@ public class RestActionRequest {
     @Autowired
     private InputInvalidHandler inputInvalidHandler;
 
+    @Autowired
+    private JsonParser jsonParser;
+
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
 
     private WebDriverCapturer webDriverCapturer = null;
 
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    public boolean initBrowserStartPage(String startUrl) {
+
+        WebDriver webDriver = restoreWebDriverSession();
+        if (webDriver != null) {
+
+            return WebDriverStart.initPage(webDriver, startUrl);
+        } else {
+
+            webDriver = WebDriverStart.browserEntry(startUrl);
+
+            if(webDriver==null) {
+                return false;
+            }
+            servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
+            servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);
+            return true;
+        }
+    }
 
     public boolean runRawActionOnAgent(RawAction rawAction) {
 
@@ -87,12 +113,32 @@ public class RestActionRequest {
         return agentState;
     }
 
+    public String fetchImmediateChildPages(RawAction rawAction) {
+
+        WebDriver webDriver = restoreWebDriverSession();
+
+        if (webDriver != null) {
+            webDriverCapturer = new WebDriverCapturer(webDriver);
+
+            Element pageElement = webDriverCapturer.readPageElementsRightNow(rawAction);
+            logger.info("Page Element info: {}", pageElement.toString());
+
+            return jsonParser.objectToJSONString(pageElement);
+        } else {
+            return null;
+        }
+    }
+
     private WebDriver restoreWebDriverSession() {
 
         Object storedSessionObject = servletContext.getAttribute(DriverConfig.WebDriverSessionKey);
         logger.info(storedSessionObject != null ? "session not null" : "session null");
         if (storedSessionObject == null) {
-            return null;
+            WebDriver webDriver = WebDriverStart.browserEntry(null);
+
+            servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
+            servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);
+            return webDriver;
         } else {
             return (WebDriver) storedSessionObject;
         }

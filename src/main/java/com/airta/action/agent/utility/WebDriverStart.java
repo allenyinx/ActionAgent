@@ -74,10 +74,10 @@ public class WebDriverStart {
 
     public static void main(String[] args) {
 
-        browserEntry();
+        browserEntry(null);
     }
 
-    public static WebDriver browserEntry() {
+    public static WebDriver browserEntry(String entryUrl) {
 
         ChromeConfig.prepareEnvironment();
 
@@ -98,14 +98,17 @@ public class WebDriverStart {
         rootElement.setElementId(ElementType.link.name() + "_0");
         rootElement.setType(ElementType.link);
 
-        WebDriver webDriver = launchBrowser(chromeOptions);
+        WebDriver webDriver = launchBrowser(chromeOptions, entryUrl);
 
         sampleValidate(webDriver);
-//        startIterate(webDriver, rootElement);
-
 
 //        tearDownBrowser(webDriver);
         return webDriver;
+    }
+
+    public static boolean initPage(WebDriver webDriver, String initUrl) {
+
+        return navigateURL(webDriver, initUrl);
     }
 
     private static void startIterate(WebDriver webDriver, Element rootElement) {
@@ -197,10 +200,14 @@ public class WebDriverStart {
         }
     }
 
-    private static WebDriver launchBrowser(ChromeOptions chromeOptions) {
+    private static WebDriver launchBrowser(ChromeOptions chromeOptions, String entryUrl) {
 
         WebDriver driver = new ChromeDriver(chromeOptions);
-        navigateURL(driver, DriverConfig.ENTRY_PAGE);
+        if(entryUrl!=null) {
+            navigateURL(driver, entryUrl);
+        } else {
+            navigateURL(driver, DriverConfig.ENTRY_PAGE);
+        }
 
         return driver;
     }
@@ -412,11 +419,10 @@ public class WebDriverStart {
         return userAgentContent;
     }
 
-    private static void navigateURL(WebDriver webDriver, String url) {
+    public static boolean navigateURL(WebDriver webDriver, String url) {
         try {
             webDriver.get(url);
             info(" ==== " + NavigateCount++ + " ===");
-//            DuplicateAction.visitedList.add(url);
 
         } catch (TimeoutException e) {
             logger.error(e.getLocalizedMessage());
@@ -427,10 +433,10 @@ public class WebDriverStart {
                 webDriver.navigate().refresh();
             } catch (Exception e2) {
                 logger.error(e2.getLocalizedMessage());
-                return;
+                return false;
             }
-
         }
+        return true;
     }
 
     private static void info(String info) {

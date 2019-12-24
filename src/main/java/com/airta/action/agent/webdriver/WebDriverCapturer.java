@@ -16,6 +16,9 @@ import org.openqa.selenium.logging.LogType;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author allenyin
+ */
 public class WebDriverCapturer extends WebDriverWrapUp {
 
     protected HtmlParser htmlParser;

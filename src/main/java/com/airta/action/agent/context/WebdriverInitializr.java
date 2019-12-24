@@ -43,7 +43,7 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private void initWebDriver(ApplicationReadyEvent applicationReadyEvent) {
 
-        webDriver = WebDriverStart.browserEntry();
+        webDriver = WebDriverStart.browserEntry(null);
 
         String entryPageSource = "";
         try {
