@@ -100,9 +100,6 @@ public class WebDriverStart {
 
         WebDriver webDriver = launchBrowser(chromeOptions, entryUrl);
 
-        sampleValidate(webDriver);
-
-//        tearDownBrowser(webDriver);
         return webDriver;
     }
 
@@ -256,6 +253,7 @@ public class WebDriverStart {
 
         Wait<WebDriver> wait = new WebDriverWait(webDriver, 30);
         wait.until(new Function<WebDriver, Boolean>() {
+            @Override
             public Boolean apply(WebDriver driver) {
                 System.out.println("Current Window State       : "
                         + String.valueOf(((JavascriptExecutor) driver).executeScript("return document.readyState")));
@@ -422,8 +420,7 @@ public class WebDriverStart {
     public static boolean navigateURL(WebDriver webDriver, String url) {
         try {
             webDriver.get(url);
-            info(" ==== " + NavigateCount++ + " ===");
-
+            info("## navigating to URL: "+url);
         } catch (TimeoutException e) {
             logger.error(e.getLocalizedMessage());
             webDriver.navigate().refresh();

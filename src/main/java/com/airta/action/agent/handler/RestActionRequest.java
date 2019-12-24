@@ -50,19 +50,18 @@ public class RestActionRequest {
 
         WebDriver webDriver = restoreWebDriverSession();
         if (webDriver != null) {
-
-            return WebDriverStart.initPage(webDriver, startUrl);
-        } else {
-
-            webDriver = WebDriverStart.browserEntry(startUrl);
-
-            if(webDriver==null) {
-                return false;
-            }
-            servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
-            servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);
-            return true;
+            logger.info("## webdriver session restored ..");
+            webDriver.close();
         }
+
+        webDriver = WebDriverStart.browserEntry(startUrl);
+
+        servletContext.setAttribute(DriverConfig.WebDriverSessionKey, webDriver);
+        servletContext.setAttribute(DriverConfig.WebDriverSessionStatus, WebDriverState.INIT);
+
+        WebDriverStart.initPage(webDriver, startUrl);
+        WebDriverStart.waitForPageLoad(webDriver);
+        return true;
     }
 
     public boolean runRawActionOnAgent(RawAction rawAction) {

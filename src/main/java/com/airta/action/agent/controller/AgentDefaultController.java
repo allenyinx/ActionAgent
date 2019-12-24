@@ -57,7 +57,7 @@ public class AgentDefaultController {
 
     @PostMapping(value = "/initBrowser")
     @ResponseBody
-    public Object initBrowserStart(String startUrl) {
+    public Object initBrowserStart(@RequestParam(name = "url") String startUrl) {
 
         logger.info("## init browser url to : {}", startUrl);
         if (restActionRequest.initBrowserStartPage(startUrl)) {
