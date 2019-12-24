@@ -1,7 +1,7 @@
 package com.airta.action.agent.utility.parser;
 
 import com.airta.action.agent.action.raw.fields.RawActionContext;
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.entity.feature.FormElement;
 import com.airta.action.agent.entity.feature.ImageElement;
 import com.airta.action.agent.entity.feature.LinkElement;

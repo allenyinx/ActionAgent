@@ -1,6 +1,6 @@
 package com.airta.action.agent.context;
 
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

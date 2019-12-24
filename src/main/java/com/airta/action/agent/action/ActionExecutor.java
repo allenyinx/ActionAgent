@@ -3,7 +3,7 @@ package com.airta.action.agent.action;
 import com.airta.action.agent.action.atom.IAction;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.action.raw.fields.RawActionContext;
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.message.ActionResultProducer;
 import com.airta.action.agent.utility.parser.JsonParser;
 import org.openqa.selenium.WebDriver;

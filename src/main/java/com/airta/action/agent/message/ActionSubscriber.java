@@ -1,6 +1,6 @@
 package com.airta.action.agent.message;
 
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.action.ActionExecutor;
 import com.airta.action.agent.handler.InputInvalidHandler;
 import org.apache.kafka.clients.consumer.ConsumerRecord;

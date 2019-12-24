@@ -1,6 +1,6 @@
 package com.airta.action.agent.context;
 
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.utility.parser.HtmlParser;
 import com.airta.action.agent.utility.WebDriverStart;
 import com.airta.action.agent.webdriver.WebDriverState;

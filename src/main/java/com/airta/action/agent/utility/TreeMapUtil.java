@@ -1,6 +1,6 @@
 package com.airta.action.agent.utility;
 
-import com.airta.action.agent.entity.DriverConfig;
+import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
 
