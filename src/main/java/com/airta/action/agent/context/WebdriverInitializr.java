@@ -30,6 +30,9 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
     @Value("${agent.init}")
     private boolean initAgentWhenStartup;
 
+    @Value("${agent.entry}")
+    private String agentStartEntryPage;
+
     private HtmlParser htmlParser = new HtmlParser();
 
     @Override
@@ -43,7 +46,7 @@ public class WebdriverInitializr implements ApplicationListener<ApplicationReady
 
     private void initWebDriver(ApplicationReadyEvent applicationReadyEvent) {
 
-        webDriver = WebDriverStart.browserEntry(null);
+        webDriver = WebDriverStart.browserEntry(agentStartEntryPage);
 
         String entryPageSource = "";
         try {

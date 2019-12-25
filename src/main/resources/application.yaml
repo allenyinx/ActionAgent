@@ -48,6 +48,7 @@ kafka:
       memory: 40960
 agent:
   init: false
+  entry: www.baidu.com
 
 ---
 spring:
@@ -82,6 +83,7 @@ kafka:
       memory: 40960
 agent:
   init: true
+  entry: www.baidu.com
 
 ---
 spring:
@@ -116,3 +118,4 @@ kafka:
       memory: 40960
 agent:
   init: true
+  entry: ${AgentEntryURL}
