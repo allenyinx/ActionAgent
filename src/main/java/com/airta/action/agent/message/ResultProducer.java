@@ -8,6 +8,9 @@ import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 import org.springframework.util.concurrent.ListenableFuture;
 
+/**
+ * @author allenyin
+ */
 @Component
 public class ResultProducer {
 

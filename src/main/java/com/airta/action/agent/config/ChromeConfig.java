@@ -1,4 +1,4 @@
-package com.airta.action.agent.browser;
+package com.airta.action.agent.config;
 
 public class ChromeConfig {
 

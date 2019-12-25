@@ -51,23 +51,24 @@ public class WebDriverCapturer extends WebDriverWrapUp {
     public Element readPageElementsRightNow(RawAction rawAction) {
 
         Element rootElement = new Element();
-        if (rawAction.getPathId() != null) {
+        if (rawAction!=null && rawAction.getPathId() != null) {
             rootElement.setElementId(rawAction.getPathId());
         } else {
-
             rootElement.setId("root_0");
             rootElement.setClassName("page");
-            rootElement.setElementId("root_" + rawAction.getId());
-
+            rootElement.setElementId("root_" + rawAction!=null?rawAction.getId():"0");
         }
         rootElement.setActionable(true);
         rootElement.setUrl(webDriver.getCurrentUrl());
         rootElement.setType(ElementType.page);
         rootElement.setWorkingOn(true);
 
-        RawActionContext rawActionContext = rawAction.getContext();
-        if (rawActionContext != null) {
-            rootElement.setPathPath(rawActionContext.getPagePath());
+        RawActionContext rawActionContext = null;
+        if(rawAction!=null) {
+            rawActionContext = rawAction.getContext();
+            if (rawActionContext != null) {
+                rootElement.setPathPath(rawActionContext.getPagePath());
+            }
         }
 
         /**

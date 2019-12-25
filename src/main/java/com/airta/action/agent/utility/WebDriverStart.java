@@ -4,7 +4,7 @@ import com.airta.action.agent.entity.DeviceType;
 import com.airta.action.agent.config.DriverConfig;
 import com.airta.action.agent.entity.html.Element;
 import com.airta.action.agent.entity.html.ElementType;
-import com.airta.action.agent.browser.ChromeConfig;
+import com.airta.action.agent.config.ChromeConfig;
 import com.airta.action.agent.utility.io.FileUtil;
 import com.airta.action.agent.utility.parser.HtmlParser;
 import org.openqa.selenium.*;
@@ -74,7 +74,7 @@ public class WebDriverStart {
 
     public static void main(String[] args) {
 
-        browserEntry(null);
+        browserEntry("http://www.baidu.com");
     }
 
     public static WebDriver browserEntry(String entryUrl) {
@@ -98,6 +98,10 @@ public class WebDriverStart {
         rootElement.setElementId(ElementType.link.name() + "_0");
         rootElement.setType(ElementType.link);
 
+        if(!entryUrl.startsWith("http://") && !entryUrl.startsWith("https://")) {
+            logger.warn("## invalid entry url, adding prefix ..");
+            entryUrl = "http://"+entryUrl;
+        }
         WebDriver webDriver = launchBrowser(chromeOptions, entryUrl);
 
         return webDriver;

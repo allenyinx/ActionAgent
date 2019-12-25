@@ -4,6 +4,8 @@ package com.airta.action.agent.controller;
 import com.airta.action.agent.action.raw.RawAction;
 import com.airta.action.agent.config.CommonConfig;
 import com.airta.action.agent.handler.RestActionRequest;
+import com.airta.action.agent.message.ActionResultProducer;
+import com.airta.action.agent.message.ResultProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ public class AgentDefaultController {
 
     @Autowired
     private RestActionRequest restActionRequest;
+
+    @Autowired
+    private ResultProducer resultProducer;
 
     @GetMapping(value = "/alive")
     public HttpStatus checkMessageStatus() {
@@ -90,6 +95,15 @@ public class AgentDefaultController {
             return restActionRequest.fetchImmediateChildPages(action);
         }
         return null;
+    }
+
+    @PostMapping(value = "/initSiteMap", produces = "application/json")
+    @ResponseBody
+    public Object initCrawlerForStartSiteMap() {
+
+        String childElementContents = restActionRequest.fetchImmediateChildPages(null);
+        ((ActionResultProducer)resultProducer).sendReportMessage("init", childElementContents);
+        return childElementContents;
     }
 
     @GetMapping(value = "/version")

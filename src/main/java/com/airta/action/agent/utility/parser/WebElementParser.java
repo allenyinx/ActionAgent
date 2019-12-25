@@ -59,7 +59,6 @@ public class WebElementParser {
             } else {
                 featureElement.setPathPath(locatorPrefix + "[" + index + "]");
             }
-
         }
         return featureElement;
     }
