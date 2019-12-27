@@ -29,7 +29,7 @@ public class AgentDefaultController {
     private RestActionRequest restActionRequest;
 
     @Autowired
-    private ResultProducer resultProducer;
+    private ActionResultProducer resultProducer;
 
     @GetMapping(value = "/alive")
     public HttpStatus checkMessageStatus() {
@@ -102,7 +102,7 @@ public class AgentDefaultController {
     public Object initCrawlerForStartSiteMap() {
 
         String childElementContents = restActionRequest.fetchImmediateChildPages(null);
-        ((ActionResultProducer)resultProducer).sendReportMessage("init", childElementContents);
+        ((ActionResultProducer) resultProducer).sendReportMessage("init", childElementContents);
         return childElementContents;
     }
 
